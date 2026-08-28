@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aidê Vaz Oliveira — Market & Trade Intelligence Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#F1EADD;              /* page background — cream */
+    --ink-2:#E3EBF0;            /* surfaces / stack cells / nav base */
+    --ink-3:#E3EBF0;            /* progress bar track */
+    --line:#D6BC9F;             /* borders & dividers — warm beige */
+    --text:#0B5B6B;             /* headings / strong text — deep teal */
+    --text-dim:#556873;         /* body copy — slate blue-grey */
+    --gold:#065485;             /* primary accent — deep blue (CTAs, links, numbers) */
+    --gold-soft: rgba(6,84,133,0.12);
+    --jade:#00756f;             /* secondary accent — teal green */
+    --jade-soft: rgba(0,117,111,0.12);
+    --warm:#9D6546;             /* single warm accent, used sparingly */
+    --serif: 'Petrona', serif;
+    --sans: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+
+  ::selection{ background:var(--gold-soft); color:var(--text); }
+
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 32px; }
+  @media (max-width:640px){ .wrap{ padding:0 20px; } }
+
+  /* ---------- NAV ---------- */
+  header.site{
+    position:sticky; top:0; z-index:50;
+    background:rgba(241,234,221,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 0;
+  }
+  .brand{
+    font-family:var(--serif); font-size:19px; letter-spacing:0.02em;
+    display:flex; align-items:center; gap:10px; color:var(--text);
+  }
+  .brand .dot-route{
+    width:16px; height:16px; position:relative;
+  }
+  .navlinks{ display:flex; gap:34px; font-size:14px; color:var(--text-dim); }
+  .navlinks a{ position:relative; transition:color .25s ease; }
+  .navlinks a:hover{ color:var(--text); }
+  .navlinks a::after{
+    content:""; position:absolute; left:0; right:0; bottom:-6px; height:1px;
+    background:var(--gold); transform:scaleX(0); transform-origin:left;
+    transition:transform .3s ease;
+  }
+  .navlinks a:hover::after{ transform:scaleX(1); }
+  .navcta{
+    font-size:13px; font-family:var(--mono); color:var(--jade);
+    border:1px solid rgba(0,117,111,0.4); padding:8px 16px; border-radius:2px;
+    transition:all .25s ease;
+  }
+  .navcta:hover{ background:var(--jade-soft); border-color:var(--jade); }
+  .navtoggle{ display:none; }
+  @media (max-width:760px){
+    .navlinks{ display:none; }
+    .navtoggle{ display:block; font-family:var(--mono); font-size:12px; color:var(--text-dim); }
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{ position:relative; padding:110px 0 90px; overflow:hidden; }
+  .route-art{
+    position:absolute; inset:0; z-index:0; opacity:0.5; pointer-events:none;
+  }
+  .route-art svg{ width:100%; height:100%; }
+  .route-path{
+    fill:none; stroke:var(--jade); stroke-width:1.2; stroke-dasharray:6 6;
+    stroke-linecap:round; opacity:0.55;
+    stroke-dashoffset: 1000;
+    stroke-dasharray: 1000;
+    animation: draw 3.5s ease forwards 0.3s;
+  }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+  .node{ fill:var(--jade); }
+  .node.gold{ fill:var(--warm); }
+  .node-pulse{
+    fill:none; stroke:var(--jade); stroke-width:1;
+    animation: pulse 2.6s ease-out infinite;
+  }
+  @keyframes pulse{
+    0%{ r:4; opacity:0.9; }
+    100%{ r:22; opacity:0; }
+  }
+
+  .hero-inner{ position:relative; z-index:1; max-width:760px; }
+  .eyebrow{
+    font-family:var(--mono); font-size:12.5px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--jade); margin-bottom:22px; display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{ content:""; width:22px; height:1px; background:var(--jade); }
+  h1{
+    font-family:var(--serif); font-weight:600; font-size:clamp(38px,6vw,60px);
+    line-height:1.08; letter-spacing:-0.01em; margin-bottom:26px; color:var(--text);
+  }
+  h1 em{ font-style:italic; color:var(--warm); font-weight:500; }
+  .lede{
+    font-size:17px; color:var(--text-dim); max-width:560px; margin-bottom:38px;
+  }
+  .hero-cta{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:64px; }
+  .btn{
+    font-family:var(--sans); font-weight:600; font-size:14px; padding:13px 24px;
+    border-radius:2px; transition:all .25s ease; display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn-primary{ background:var(--gold); color:var(--ink); }
+  .btn-primary:hover{ background:#0A70A8; transform:translateY(-1px); }
+  .btn-ghost{ border:1px solid var(--line); color:var(--text); }
+  .btn-ghost:hover{ border-color:var(--text-dim); }
+
+  .stat-row{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:0;
+    border-top:1px solid var(--line);
+  }
+  .stat{ padding:24px 0 0; border-right:1px solid var(--line); }
+  .stat:last-child{ border-right:none; }
+  .stat b{
+    font-family:var(--serif); font-size:30px; color:var(--gold); display:block; font-weight:600;
+  }
+  .stat span{ font-size:12.5px; color:var(--text-dim); font-family:var(--mono); }
+  @media (max-width:640px){
+    .stat-row{ grid-template-columns:repeat(2,1fr); }
+    .stat{ padding-bottom:18px; }
+    .stat:nth-child(2){ border-right:none; }
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{ padding:100px 0; border-top:1px solid var(--line); position:relative; }
+  .kicker{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--text-dim); margin-bottom:14px;
+  }
+  h2{
+    font-family:var(--serif); font-size:clamp(28px,4vw,38px); font-weight:600; margin-bottom:20px;
+    max-width:620px; color:var(--text);
+  }
+  .section-lede{ color:var(--text-dim); max-width:600px; font-size:15.5px; margin-bottom:56px; }
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:64px; align-items:start; }
+  @media (max-width:820px){ .about-grid{ grid-template-columns:1fr; gap:40px; } }
+  .about-text p{ color:var(--text-dim); margin-bottom:18px; font-size:15.5px; }
+  .about-text strong{ color:var(--text); font-weight:600; }
+  .flow-line{
+    font-family:var(--mono); font-size:12.5px; color:var(--jade); margin-top:28px;
+    display:flex; flex-wrap:wrap; gap:8px; align-items:center;
+  }
+  .flow-line span.sep{ color:var(--text-dim); }
+
+  .lang-box{ border:1px solid var(--line); padding:26px; border-radius:2px; background:var(--ink-2); }
+  .lang-box h3{
+    font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:0.1em;
+    color:var(--text-dim); margin-bottom:18px;
+  }
+  .lang-item{ margin-bottom:16px; }
+  .lang-item:last-child{ margin-bottom:0; }
+  .lang-name{ display:flex; justify-content:space-between; font-size:14px; margin-bottom:6px; color:var(--text); }
+  .lang-level{ color:var(--gold); font-family:var(--mono); font-size:12px; }
+  .bar{ height:3px; background:#D9CFC0; border-radius:2px; overflow:hidden; }
+  .bar i{ display:block; height:100%; background:var(--jade); }
+
+  /* ---------- STACK ---------- */
+  .stack-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  @media (max-width:760px){ .stack-grid{ grid-template-columns:repeat(2,1fr); } }
+  .stack-cell{ background:var(--ink); padding:26px 22px; }
+  .stack-cell h4{
+    font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:0.08em;
+    color:var(--jade); margin-bottom:12px;
+  }
+  .stack-cell ul{ list-style:none; font-size:14px; color:var(--text-dim); }
+  .stack-cell li{ padding:4px 0; }
+
+  /* ---------- CASES ---------- */
+  .case-list{ display:flex; flex-direction:column; }
+  .case{
+    display:grid; grid-template-columns:64px 1fr auto; gap:28px; align-items:start;
+    padding:32px 0; border-bottom:1px solid var(--line); transition:background .25s ease;
+  }
+  .case:hover{ background:rgba(6,84,133,0.04); }
+  .case:first-child{ padding-top:0; }
+  @media (max-width:700px){ .case{ grid-template-columns:1fr; gap:12px; } }
+  .case-num{ font-family:var(--mono); color:var(--text-dim); font-size:13px; padding-top:4px; }
+  .case-tags{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px; }
+  .tag{
+    font-family:var(--mono); font-size:11px; padding:3px 9px; border:1px solid var(--line);
+    border-radius:100px; color:var(--text-dim);
+  }
+  .case h3{
+    font-family:var(--serif); font-size:22px; font-weight:600; margin-bottom:10px; color:var(--text);
+  }
+  .case p{ color:var(--text-dim); font-size:14.5px; max-width:560px; }
+  .case-link{
+    font-family:var(--mono); font-size:12.5px; color:var(--gold); white-space:nowrap;
+    align-self:center; border-bottom:1px solid transparent; transition:border-color .2s ease;
+  }
+  .case-link:hover{ border-color:var(--gold); }
+  @media (max-width:700px){ .case-link{ align-self:flex-start; } }
+
+  /* ---------- EXPERIENCE TIMELINE ---------- */
+  .timeline{ position:relative; padding-left:32px; border-left:1px solid var(--line); }
+  .tl-item{ position:relative; padding-bottom:44px; }
+  .tl-item:last-child{ padding-bottom:0; }
+  .tl-item::before{
+    content:""; position:absolute; left:-37px; top:4px; width:9px; height:9px;
+    border-radius:50%; background:var(--gold); box-shadow:0 0 0 4px var(--ink), 0 0 0 5px var(--line);
+  }
+  .tl-role{ font-family:var(--serif); font-size:19px; font-weight:600; margin-bottom:4px; color:var(--text); }
+  .tl-meta{ font-family:var(--mono); font-size:12.5px; color:var(--jade); margin-bottom:12px; }
+  .tl-item p{ color:var(--text-dim); font-size:14.5px; max-width:600px; }
+  .tl-skills{ list-style:none; margin-top:12px; max-width:600px; }
+  .tl-skills li{
+    font-size:13.5px; color:var(--text-dim); padding:3px 0 3px 16px; position:relative;
+  }
+  .tl-skills li::before{ content:"–"; position:absolute; left:0; color:var(--jade); }
+
+  /* ---------- CONTACT ---------- */
+  .contact{
+    text-align:left; padding-bottom:70px;
+  }
+  .contact-inner{ max-width:640px; }
+  .contact h2{ margin-bottom:22px; }
+  .contact-lede{ color:var(--text-dim); font-size:16px; margin-bottom:40px; }
+  .contact-links{ display:flex; gap:16px; flex-wrap:wrap; margin-bottom:56px; }
+
+  footer{
+    border-top:1px solid var(--line); padding:28px 0; font-size:12.5px; color:var(--text-dim);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; font-family:var(--mono);
+  }
+  footer a:hover{ color:var(--text); }
+
+  /* reveal on scroll */
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .route-path{ animation:none; stroke-dashoffset:0; }
+    .node-pulse{ animation:none; display:none; }
+    .reveal{ opacity:1; transform:none; transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="#top">
+        <svg class="dot-route" viewBox="0 0 16 16"><circle cx="3" cy="12" r="2.2" fill="#00756f"/><circle cx="13" cy="4" r="2.2" fill="#9D6546"/><path d="M4 11 L12 5" stroke="#556873" stroke-width="1" stroke-dasharray="2 2"/></svg>
+        Aidê Vaz
+      </a>
+      <div class="navlinks">
+        <a href="#sobre">About me</a>
+        <a href="#stack">Stack</a>
+        <a href="#casos">Case Study</a>
+        <a href="#experiencia">Experience</a>
+        <a href="#contato">Contact</a>
+      </div>
+      <a class="navcta" href="#contato">Get in Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero" style="border-top:none; padding-top:110px;">
+    <div class="route-art">
+      <svg viewBox="0 0 1120 460" preserveAspectRatio="xMidYMid slice">
+        <path class="route-path" d="M 120 380 Q 560 40 980 90" />
+        <circle class="node" cx="120" cy="380" r="4"></circle>
+        <circle class="node-pulse" cx="120" cy="380" r="4"></circle>
+        <circle class="node gold" cx="980" cy="90" r="4"></circle>
+      </svg>
+    </div>
+    <div class="wrap">
+      <div class="hero-inner">
+        <div class="eyebrow">International Business &amp; Trade Intelligence</div>
+        <h1>Turning Data and Geopolitical Analysis into <em>Business Decisions</em></h1>
+        <p class="lede">Market Intelligence Analyst with a background in International Relations, specialized in raw materials extraction and its impact across strategic sectors: energy, mining, agriculture, and technology, with dashboards that drive executive decision-making, not just report on the past.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#casos">Case Study</a>
+          <a class="btn btn-ghost" href="#contato">Get In Contact</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sobre">
+    <div class="wrap">
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <div class="kicker">About me</div>
+          <h2>Where geopolitics, data, and business strategy meet</h2>
+          <p>My background in <strong>International Relations</strong> (UNIFESP) taught me to read context, why a market moves, not just what the numbers say. That, combined with a technical foundation in <strong>BI and Data Science</strong>, is what I apply today to turn raw trade flow into actionable intelligence.</p>
+          <p>At <strong>COLI Shipping</strong>, I led a proprietary intelligence project that combined International Relations methodology with investment analysis to track global trade flows, converting raw data into high-value leads and resulting in a <strong>374% increase in gross profit</strong>.</p>
+          <p>Currently deepening my Mandarin, with a focus on further expanding the analytical bridge between the Global and Latin American markets.</p>
+          <div class="flow-line">
+            <span>Data collection</span><span class="sep">→</span>
+            <span>Modeling &amp; BI</span><span class="sep">→</span>
+            <span>Geopolitical reading</span><span class="sep">→</span>
+            <span>Deep Business Report</span>
+          </div>
+        </div>
+        <div class="lang-box reveal">
+          <h3>Languages</h3>
+          <div class="lang-item">
+            <div class="lang-name"><span>English</span><span class="lang-level">Fluent</span></div>
+            <div class="bar"><i style="width:95%"></i></div>
+          </div>
+          <div class="lang-item">
+            <div class="lang-name"><span>Spanish</span><span class="lang-level">Professional</span></div>
+            <div class="bar"><i style="width:75%"></i></div>
+          </div>
+          <div class="lang-item">
+            <div class="lang-name"><span>Mandarin</span><span class="lang-level">In Progress · HSK 1</span></div>
+            <div class="bar"><i style="width:30%"></i></div>
+          </div>
+          <div class="lang-item">
+            <div class="lang-name"><span>Hungarian</span><span class="lang-level">Basic</span></div>
+            <div class="bar"><i style="width:20%"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="wrap">
+      <div class="kicker reveal">Stack &amp; Skills</div>
+      <h2 class="reveal">Tools that support analysis</h2>
+      <p class="section-lede reveal">From data collection to executive dashboards, without losing sight of the business context behind the numbers.</p>
+      <div class="stack-grid reveal">
+        <div class="stack-cell">
+          <h4>Business Intelligence</h4>
+          <ul><li>Power BI (DAX / Power Query)</li><li>BI with Excel</li></ul>
+        </div>
+        <div class="stack-cell">
+          <h4>Data &amp; Science</h4>
+          <ul><li>SQL Server / MySQL</li><li>Data Warehouse / Data Lake</li><li>Python · ETL</li></ul>
+        </div>
+        <div class="stack-cell">
+          <h4>Market Intelligence</h4>
+          <ul><li>Market &amp; Competitive Intelligence</li><li>Strategic Pricing</li><li>Account-Based Intelligence</li></ul>
+        </div>
+        <div class="stack-cell">
+          <h4>Operations &amp; Trade</h4>
+          <ul><li>CRM improvement and Development · RevOps</li><li>Logcomex · Skychart</li><li>Global Trade &amp; Project Cargo</li><li>Renewable Energy &amp; </li> <li>Power Grid &amp; Distribution</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="casos">
+    <div class="wrap">
+      <div class="kicker reveal">Case Study</div>
+      <h2 class="reveal">End-to-End Analyses</h2>
+      <p class="section-lede reveal">Each project documents the business question, the data used, the methodology, and the final recommendation, not just the final dashboard. <span style="color:var(--gold)"</span></p>
+      <div class="case-list reveal">
+        <div class="case">
+          <div class="case-num">01</div>
+          <div>
+            <div class="case-tags"><span class="tag">Power BI</span><span class="tag">SQL</span><span class="tag">Trade Flow</span></div>
+            <h3>Forecasting the gap: pipeline analytics for a global grid-protection manufacturer</h3>
+            <p>How a 268-day sales cycle, a stalled backlog, and an unpriced market segment were turned into a forecast the commercial leadership team could actually act on.</p>
+            <a class="case-link" href="Case Study - 1.html">See Report →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experiencia">
+    <div class="wrap">
+      <div class="kicker reveal">Experience</div>
+      <h2 class="reveal">Professional Trajectory</h2>
+      <div class="timeline reveal">
+        <div class="tl-item">
+          <div class="tl-role">Sales Executive &amp; Market Intelligence Analyst</div>
+          <div class="tl-meta">COLI Shipping &amp; Transport do Brasil · Out 2022 — May 2026</div>
+          <p>Led a proprietary market intelligence project, generating +374% gross profit growth ($1.9M) and +198% revenue growth through automated Power BI dashboards, with a focus on the Mining, Energy, and Oil & Gas markets. Delivered monthly Data Storytelling reports to align international pricing with macroeconomic trends.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-role">International Relations Graduate</div>
+          <div class="tl-meta">UNIFESP</div>
+          <p>Thesis: Afrofuturism and the African Renaissance as strategic frameworks for national security in post-Cold War Nigeria. A qualitative analysis of cultural narratives, innovation, and strategic sovereignty in emerging markets.</p>
+        </div>
+        <div class="tl-item">
+          <div class="tl-role">Data Analytics</div>
+          <div class="tl-meta">Alura</div>
+          <p>Development of both technical hard skills and essential soft skills to work collaboratively, critically, and innovatively in multidisciplinary teams, adapting to different challenges in the data-driven job market.</p>
+          <ul class="tl-skills">
+            <li>Python, SQL, and Excel</li>
+            <li>SQL, Power BI, Pandas, and Storytelling</li>
+            <li>BigQuery, APIs, Automation, and Advanced Statistics</li>
+            <li>NoSQL, Cloud ETL, Machine Learning, and Advanced Visualizations</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato" class="contact">
+    <div class="wrap contact-inner reveal">
+      <div class="kicker">Contact</div>
+      <h2>Let's talk about data, global trade, or the next opportunity</h2>
+      <p class="contact-lede">Open to positions in Market Intelligence, Trade Analysis and Business Intelligence with an international focus — especially along the China-Latin America axis.</p>
+      <div class="contact-links">
+        <a class="btn btn-primary" href="mailto:aidevaz0310@outlook.com">Send Email</a>
+        <a class="btn btn-ghost" href="https://www.linkedin.com/in/aid%C3%AA-vaz-470871172/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap" style="width:100%; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+    <span>© 2026 Aidê Vaz - International Business &amp; Trade Intelligence</span>
+    <span>
+      <a href="mailto:aidevaz0310@outlook.com">E-mail</a> ·
+      <a href="https://www.linkedin.com/in/aid%C3%AA-vaz-470871172/" target="_blank" rel="noopener">LinkedIn</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>

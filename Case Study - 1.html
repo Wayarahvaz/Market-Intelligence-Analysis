@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forecasting the Gap — Revenue Analytics Case Study | Aidê Vaz Oliveira</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#F1EADD;
+    --ink-2:#E3EBF0;
+    --line:#D6BC9F;
+    --line-soft: rgba(214,188,159,0.4);
+    --text:#0B5B6B;
+    --text-dim:#556873;
+    --muted-2:#7C8B95;
+    --gold:#065485;
+    --gold-soft: rgba(6,84,133,0.10);
+    --jade:#00756f;
+    --jade-soft: rgba(0,117,111,0.12);
+    --jade-dim:#0A5C57;
+    --warm:#9D6546;
+    --warm-soft: rgba(157,101,70,0.14);
+    --warm-dim:#7A4F36;
+    --serif: 'Petrona', serif;
+    --sans: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      linear-gradient(var(--line-soft) 1px, transparent 1px) 0 0/100% 64px,
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px) 0 0/64px 100%,
+      var(--ink);
+    background-attachment:fixed;
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--jade); text-decoration:none;}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 28px;}
+  .mono{font-family:var(--mono);}
+
+  /* ---------- nav ---------- */
+  header.site{
+    position:sticky; top:0; z-index:50;
+    background:rgba(241,234,221,0.9);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{ display:flex; align-items:center; justify-content:space-between; padding:18px 0; }
+  .back-link{
+    font-family:var(--mono); font-size:13px; color:var(--text-dim); display:flex; align-items:center; gap:8px;
+    transition:color .2s ease;
+  }
+  .back-link:hover{ color:var(--text); }
+
+  /* ---------- disclaimer ---------- */
+  .disclaimer{
+    background:var(--ink-2);
+    border-bottom:1px solid var(--line);
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.03em;
+    color:var(--text-dim);
+    text-align:center;
+    padding:10px 16px;
+  }
+  .disclaimer b{color:var(--warm);font-weight:600;}
+
+  /* ---------- hero ---------- */
+  header.hero{padding:80px 0 64px;position:relative;}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.16em;
+    color:var(--jade);
+    text-transform:uppercase;
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{
+    content:"";width:8px;height:8px;border-radius:50%;
+    background:var(--jade);
+    box-shadow:0 0 0 3px var(--jade-soft);
+  }
+  h1{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(32px,5vw,52px);
+    line-height:1.1;
+    letter-spacing:-.01em;
+    max-width:900px;
+    margin-bottom:22px;
+    color:var(--text);
+  }
+  h1 .accent{color:var(--jade); font-style:italic; font-weight:500;}
+  .hero-sub{
+    max-width:620px;
+    color:var(--text-dim);
+    font-size:16.5px;
+    font-style:italic;
+    font-weight:400;
+  }
+  .hero-meta{
+    display:flex;gap:32px;flex-wrap:wrap;
+    margin-top:36px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--muted-2);
+  }
+  .hero-meta span b{color:var(--text);font-weight:500;}
+
+  /* ---------- gauge instrument ---------- */
+  .instrument{
+    margin-top:56px;
+    background:var(--ink-2);
+    border:1px solid var(--line);
+    border-radius:2px;
+    padding:30px 32px 26px;
+    position:relative;
+  }
+  .instrument::before{
+    content:"FIG. 01 — REVENUE-TO-TARGET INSTRUMENT";
+    position:absolute;top:-11px;left:24px;
+    background:var(--ink);
+    padding:0 8px;
+    font-family:var(--mono);
+    font-size:10.5px;letter-spacing:.1em;
+    color:var(--muted-2);
+  }
+  .gauge-track{
+    position:relative;height:14px;background:#EADFC9;
+    border-radius:2px;overflow:visible;margin:38px 4px 14px;
+    border:1px solid var(--line);
+  }
+  .gauge-fill-trend{position:absolute;left:0;top:0;bottom:0;background:var(--muted-2);border-radius:2px;}
+  .gauge-fill-weighted{position:absolute;left:0;top:0;bottom:0;background:var(--jade);border-radius:2px;}
+  .gauge-gap{position:absolute;top:0;bottom:0;background:repeating-linear-gradient(135deg, rgba(157,101,70,.30) 0 6px, rgba(157,101,70,.10) 6px 12px);border-left:1px dashed var(--warm);border-right:1px solid var(--warm);}
+  .gauge-marker{position:absolute;top:-9px;width:2px;height:32px;background:var(--text);}
+  .gauge-marker.target{background:var(--warm);}
+  .gauge-label{
+    position:absolute;top:-34px;transform:translateX(-50%);
+    font-family:var(--mono);font-size:11px;white-space:nowrap;
+  }
+  .gauge-ticks{display:flex;justify-content:space-between;margin:0 4px;font-family:var(--mono);font-size:10px;color:var(--muted-2);}
+  .gauge-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:34px;}
+  @media (max-width:640px){ .gauge-stats{ grid-template-columns:repeat(2,1fr); } }
+  .gauge-stat{border-left:2px solid var(--line);padding-left:12px;}
+  .gauge-stat .num{font-family:var(--mono);font-size:19px;font-weight:600;color:var(--text);}
+  .gauge-stat .lbl{font-size:11.5px;color:var(--text-dim);margin-top:3px;}
+  .gauge-stat.hl .num{color:var(--warm);}
+  .gauge-stat.cy .num{color:var(--jade);}
+
+  /* ---------- sections / modules ---------- */
+  main{padding:64px 0 40px;}
+  section.module{padding:56px 0;border-top:1px solid var(--line);}
+  .mod-head{display:flex;align-items:baseline;gap:18px;margin-bottom:8px;flex-wrap:wrap;}
+  .mod-num{
+    font-family:var(--mono);font-size:13px;color:var(--jade);
+    letter-spacing:.05em;
+  }
+  h2{
+    font-family:var(--serif);font-weight:600;
+    font-size:clamp(22px,3vw,30px);letter-spacing:-.01em; color:var(--text);
+  }
+  .mod-kicker{color:var(--text-dim);font-size:14.5px;max-width:640px;margin:14px 0 34px;}
+  .grid-2{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:start;}
+  @media (max-width:760px){.grid-2{grid-template-columns:1fr;}}
+
+  p{color:var(--text-dim);font-size:15.5px;margin-bottom:14px;}
+  p b{color:var(--text);font-weight:600;}
+  ul.plain{list-style:none;}
+  ul.plain li{
+    position:relative;padding-left:20px;margin-bottom:11px;
+    color:var(--text-dim);font-size:15px;
+  }
+  ul.plain li::before{
+    content:"›";position:absolute;left:0;color:var(--jade);font-family:var(--mono);
+  }
+
+  .readout{
+    background:var(--ink-2);border:1px solid var(--line);border-radius:2px;padding:22px 24px;
+  }
+  .readout .row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--line-soft);}
+  .readout .row:last-child{border-bottom:none;}
+  .readout .row .k{font-size:13px;color:var(--text-dim);}
+  .readout .row .v{font-family:var(--mono);font-size:14px;color:var(--text);}
+  .readout .row .v.amber{color:var(--warm);}
+  .readout .row .v.cyan{color:var(--jade);}
+
+  .callout{
+    margin-top:22px;border-left:2px solid var(--jade);
+    background:var(--jade-soft);
+    padding:20px 24px;font-size:15px;color:var(--text);
+  }
+  .callout b{color:var(--jade); font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.06em; display:block; margin-bottom:8px;}
+
+  /* module 02 - cause grid */
+  .cause-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px;}
+  @media (max-width:720px){.cause-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:480px){.cause-grid{grid-template-columns:1fr;}}
+  .cause{
+    background:var(--ink-2);border:1px solid var(--line);border-radius:2px;
+    padding:18px 16px;
+  }
+  .cause .tag{font-family:var(--mono);font-size:10.5px;color:var(--warm);letter-spacing:.06em;}
+  .cause h4{font-family:var(--serif);font-size:15px;font-weight:600;margin:8px 0 6px;color:var(--text);}
+  .cause p{font-size:13px;color:var(--text-dim);margin:0;}
+
+  /* module 03 - table */
+  table.bench{width:100%;border-collapse:collapse;margin-top:8px;font-size:13.5px;}
+  table.bench th{
+    text-align:left;font-family:var(--mono);font-weight:500;
+    font-size:11px;letter-spacing:.05em;color:var(--muted-2);
+    padding:10px 14px;border-bottom:1px solid var(--line);text-transform:uppercase;
+  }
+  table.bench td{padding:12px 14px;border-bottom:1px solid var(--line-soft);color:var(--text-dim);}
+  table.bench tr.self td{color:var(--jade);font-weight:500;}
+  table.bench td.rev{font-family:var(--mono);color:var(--text);}
+
+  /* module 04 - pipeline diagram */
+  .pipeline{display:flex;align-items:stretch;gap:0;margin-top:10px;flex-wrap:wrap;}
+  .pnode{
+    flex:1;min-width:150px;background:var(--ink-2);border:1px solid var(--line);
+    border-radius:2px;padding:18px 16px;position:relative;
+  }
+  .pnode .tag{font-family:var(--mono);font-size:10px;color:var(--muted-2);letter-spacing:.08em;}
+  .pnode h4{font-family:var(--serif);font-size:15px;margin:6px 0 8px;color:var(--text);}
+  .pnode p{font-size:12.5px;color:var(--text-dim);margin:0;}
+  .parrow{display:flex;align-items:center;justify-content:center;width:40px;color:var(--jade);font-family:var(--mono);font-size:16px;flex-shrink:0;}
+  @media (max-width:700px){.pipeline{flex-direction:column;}.parrow{width:100%;height:28px;transform:rotate(90deg);}}
+  .pnode.bronze{border-color:var(--warm-dim);}
+  .pnode.silver{border-color:var(--jade-dim);}
+  .pnode.bi{border-color:var(--jade);}
+
+  /* module 05 - tools & methodology */
+  .tools-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:6px;}
+  @media (max-width:640px){.tools-grid{grid-template-columns:1fr;}}
+  .tools-cell{background:var(--ink-2);padding:20px 18px;}
+  .tools-cell h4{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--jade);margin-bottom:10px;}
+  .tools-cell ul{list-style:none;font-size:13.5px;color:var(--text-dim);}
+  .tools-cell li{padding:3px 0;}
+
+  .method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px;}
+  @media (max-width:720px){.method-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:480px){.method-grid{grid-template-columns:1fr;}}
+  .method{background:var(--ink-2);border:1px solid var(--line);border-radius:2px;padding:18px 16px;}
+  .method .tag{font-family:var(--mono);font-size:10.5px;color:var(--jade);letter-spacing:.06em;}
+  .method h4{font-family:var(--serif);font-size:15px;font-weight:600;margin:8px 0 6px;color:var(--text);}
+  .method p{font-size:13px;color:var(--text-dim);margin:0;}
+
+  /* skills */
+  .skills{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
+  .skill{
+    font-family:var(--mono);font-size:12px;color:var(--jade);
+    border:1px solid rgba(0,117,111,0.4);padding:7px 13px;border-radius:20px;
+  }
+
+  footer{border-top:1px solid var(--line);padding:48px 0 60px;color:var(--text-dim);font-size:13px;}
+  footer p{color:var(--text-dim);font-size:13px;}
+  footer .foot-mono{font-family:var(--mono);font-size:11.5px;margin-top:8px;color:var(--muted-2);}
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <nav>
+      <a class="back-link" href="Untitled-1.html">← Back to portfolio</a>
+    </nav>
+  </div>
+</header>
+
+<div class="disclaimer">
+  <b>FICTIONALIZED CASE STUDY</b> — company, figures &amp; identifying details are fabricated or generalized for portfolio purposes. Methodology reflects real analytical work.
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Portfolio Case Study — Revenue Analytics</div>
+    <h1>Forecasting the gap: pipeline analytics for a <span class="accent">global grid-protection manufacturer</span></h1>
+    <p class="hero-sub">How a 268-day sales cycle, a stalled backlog, and an unpriced market segment were turned into a forecast the commercial leadership team could actually act on.</p>
+    <div class="hero-meta">
+      <span><b>Role</b> — Senior Revenue &amp; Pipeline Analyst</span>
+      <span><b>Sector</b> — Electrical grid protection &amp; automation</span>
+      <span><b>Scope</b> — Forecasting · Diagnostics · Market intel · Data architecture</span>
+    </div>
+
+    <div class="instrument">
+      <div class="gauge-ticks"><span>0%</span><span>25%</span><span>50%</span><span>75%</span><span>100% of annual target</span></div>
+      <div class="gauge-track">
+        <div class="gauge-fill-trend" style="width:27%"></div>
+        <div class="gauge-fill-weighted" style="width:43%"></div>
+        <div class="gauge-gap" style="left:43%;width:57%"></div>
+        <div class="gauge-marker" style="left:27%"><span class="gauge-label" style="color:var(--muted-2)">Trend-only · 27%</span></div>
+        <div class="gauge-marker" style="left:43%"><span class="gauge-label" style="color:var(--jade)">Weighted forecast · 43%</span></div>
+        <div class="gauge-marker target" style="left:100%"><span class="gauge-label" style="color:var(--warm);left:auto;right:0;transform:none;">Target</span></div>
+      </div>
+      <div class="gauge-stats">
+        <div class="gauge-stat"><div class="num">$45.0M</div><div class="lbl">Annual target</div></div>
+        <div class="gauge-stat cy"><div class="num">$19.4M</div><div class="lbl">Weighted forecast</div></div>
+        <div class="gauge-stat"><div class="num">268 days</div><div class="lbl">Avg. deal cycle</div></div>
+        <div class="gauge-stat hl"><div class="num">$25.6M</div><div class="lbl">Gap to close, current quarter</div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- MODULE 01 -->
+  <section class="module" id="forecast">
+    <div class="mod-head"><span class="mod-num">MODULE 01</span><h2>Pipeline forecasting &amp; gap-to-target</h2></div>
+    <p class="mod-kicker">The starting question wasn't "are we going to hit the number" — it was "what does the pipeline have to look like, by when, for that to even be mathematically possible."</p>
+
+    <div class="grid-2">
+      <div>
+        <p>The commercial team tracked bookings, but nobody had modeled the <b>sales-cycle-adjusted</b> version of the forecast. Using 120 days of historical deal data, I calculated an average close cycle of <b>268 days</b> and used it to back into a hard cutoff: any new opportunity entering the pipeline after that date had no realistic path to closing within the fiscal year.</p>
+        <p>I built two scenarios side by side — a <b>trend-only</b> projection assuming zero new deals, and a <b>weighted pipeline</b> forecast based on stage-adjusted probabilities. The gap between the two became the number leadership actually needed: how much <i>new, qualified</i> pipeline had to be created, not just chased.</p>
+        <div class="callout">
+          <b>Key insight</b>
+          A closer look at open opportunities also surfaced two high-probability deals (80% close confidence) that had gone 15+ days without follow-up — together worth roughly $1.1M. Flagging stalled-but-winnable deals turned out to move the forecast more than sourcing net-new pipeline.
+        </div>
+      </div>
+      <div class="readout">
+        <div class="row"><span class="k">YTD booked revenue</span><span class="v">$8.6M</span></div>
+        <div class="row"><span class="k">Trend-only projection</span><span class="v">$12.2M <span style="color:var(--muted-2)">(27%)</span></span></div>
+        <div class="row"><span class="k">Weighted pipeline forecast</span><span class="v cyan">$19.4M <span style="color:var(--muted-2)">(43%)</span></span></div>
+        <div class="row"><span class="k">Open pipeline, low-confidence</span><span class="v">$3.6M</span></div>
+        <div class="row"><span class="k">Open pipeline, qualified</span><span class="v">$1.9M</span></div>
+        <div class="row"><span class="k">Stalled, high-probability (&gt;15d)</span><span class="v amber">$1.1M</span></div>
+        <div class="row"><span class="k">New pipeline needed pre-cutoff</span><span class="v amber">$25.6M</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULE 02 -->
+  <section class="module" id="diagnostics">
+    <div class="mod-head"><span class="mod-num">MODULE 02</span><h2>Root-cause diagnostic of the sales backlog</h2></div>
+    <p class="mod-kicker">A slow pipeline isn't one problem — it's usually several small ones compounding. I mapped 120 days of stage-transition data back to six structural causes rather than treating "slow sales" as the diagnosis itself.</p>
+
+    <div class="cause-grid">
+      <div class="cause"><div class="tag">01</div><h4>Communication breakdowns</h4><p>Handoffs between sales, application engineering and delivery lost context, adding rework cycles to active deals.</p></div>
+      <div class="cause"><div class="tag">02</div><h4>Task centralization</h4><p>Approvals and technical scoping routed through one or two people, creating queueing delays independent of deal complexity.</p></div>
+      <div class="cause"><div class="tag">03</div><h4>Limited rep autonomy</h4><p>Reps lacked authority to move standard deals forward without escalation, even on low-risk terms.</p></div>
+      <div class="cause"><div class="tag">04</div><h4>Undefined process</h4><p>Stage definitions were inconsistently applied, making the CRM's own stage data an unreliable forecasting input.</p></div>
+      <div class="cause"><div class="tag">05</div><h4>Resourcing constraints</h4><p>Application engineering capacity was concentrated on one flagship program, starving the rest of the pipeline of technical support.</p></div>
+      <div class="cause"><div class="tag">06</div><h4>Fragmented governance</h4><p>No single owner tracked account-level health across the full deal lifecycle, so stalled deals went unnoticed.</p></div>
+    </div>
+    <div class="callout">
+      <b>Recommendation</b>
+      Rather than a blanket "sell more" push, the fix was process simplification and clearer account ownership — the backlog was a workflow problem wearing a forecasting costume.
+    </div>
+  </section>
+
+  <!-- MODULE 03 -->
+  <section class="module" id="market">
+    <div class="mod-head"><span class="mod-num">MODULE 03</span><h2>Competitive &amp; market intelligence</h2></div>
+    <p class="mod-kicker">The company was entering a multi-year, multi-billion-dollar national grid-digitization program. No public source broke out the addressable value of the specific equipment segment we competed in — so the market size had to be triangulated, not looked up.</p>
+
+    <table class="bench">
+      <thead><tr><th>Company</th><th>Est. revenue</th><th>Protection / relay offering</th></tr></thead>
+      <tbody>
+        <tr><td>Siemens</td><td class="rev">~$80B</td><td>SIPROTEC relay platform</td></tr>
+        <tr><td>Schneider Electric</td><td class="rev">~$36B</td><td>Easergy relays</td></tr>
+        <tr><td>ABB</td><td class="rev">~$32B</td><td>Relion relay series</td></tr>
+        <tr><td>Eaton</td><td class="rev">~$23B</td><td>Protective relays (utility/industrial)</td></tr>
+        <tr><td>L&amp;T</td><td class="rev">~$21B</td><td>Protection &amp; automation systems</td></tr>
+        <tr><td>GE Vernova (Grid Solutions)</td><td class="rev">~$15B*</td><td>Multilin relays</td></tr>
+        <tr><td>SEL</td><td class="rev">~$1B (est.)</td><td>SEL relays &amp; automation controllers</td></tr>
+        <tr class="self"><td>Client company (fictionalized)</td><td class="rev">n/a</td><td>Relay protection &amp; automation</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:11.5px;color:var(--muted-2);margin-top:8px;">*Grid segment only. Figures from public industry/market reports, approximate.</p>
+
+    <p style="margin-top:26px;">Where a direct market figure didn't exist, I used the regulator's public equipment reference-price registry — which itemizes costs like circuit breakers and switchgear — as a triangulation anchor, cross-referenced against trade-press coverage of the program's disclosed total capex. That produced a defensible <i>range</i> for the segment's addressable value instead of a false-precision single number.</p>
+  </section>
+
+  <!-- MODULE 04 -->
+  <section class="module" id="architecture">
+    <div class="mod-head"><span class="mod-num">MODULE 04</span><h2>The data architecture behind the forecast</h2></div>
+    <p class="mod-kicker">Module 01's forecast only stays useful if it refreshes itself. I designed a lightweight bronze/silver pipeline so the CRM's raw deal data could feed both the forecast model and a live leadership dashboard.</p>
+
+    <div class="pipeline">
+      <div class="pnode bronze">
+        <div class="tag">BRONZE</div>
+        <h4>Raw ingestion</h4>
+        <p>Daily API snapshot of every open deal — id, timestamp, full raw JSON payload — landed untouched for traceability.</p>
+      </div>
+      <div class="parrow">→</div>
+      <div class="pnode silver">
+        <div class="tag">SILVER</div>
+        <h4>Structured layer</h4>
+        <p>Cleaned table: deal value, margin %, stage, funnel, win/loss flag, prediction date — one row per deal per snapshot.</p>
+      </div>
+      <div class="parrow">→</div>
+      <div class="pnode bi">
+        <div class="tag">BI / FORECAST</div>
+        <h4>Dashboard &amp; win-probability</h4>
+        <p>Power BI dashboard for leadership, plus a stage-weighted win-probability layer feeding the Module 01 forecast.</p>
+      </div>
+    </div>
+    <div class="callout">
+      <b>Why it matters</b>
+      This is what separated the forecast from a one-off spreadsheet exercise: every number in Module 01 could be regenerated on demand instead of rebuilt by hand each quarter.
+    </div>
+  </section>
+
+  <!-- MODULE 05 -->
+  <section class="module" id="toolkit">
+    <div class="mod-head"><span class="mod-num">MODULE 05</span><h2>Tools &amp; analytical methodology</h2></div>
+    <p class="mod-kicker">The forecast in Module 01 only holds up because of what's underneath it — the specific tools used to move data, and the analytical methods used to interpret it.</p>
+
+    <h4 style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-dim);margin-bottom:14px;">Tools</h4>
+    <div class="tools-grid">
+      <div class="tools-cell">
+        <h4>Data &amp; BI</h4>
+        <ul><li>Power BI (DAX / Power Query)</li><li>SQL Server</li><li>Excel (advanced modeling)</li></ul>
+      </div>
+      <div class="tools-cell">
+        <h4>Pipeline &amp; CRM</h4>
+        <ul><li>CRM API (deal-stage extraction)</li><li>Pipedrive</li><li>Automated data refresh jobs</li></ul>
+      </div>
+      <div class="tools-cell">
+        <h4>Data Engineering</h4>
+        <ul><li>Python (ETL scripting)</li><li>Medallion architecture (bronze/silver)</li><li>JSON / structured logging</li></ul>
+      </div>
+      <div class="tools-cell">
+        <h4>Research &amp; Intelligence</h4>
+        <ul><li>Public regulator price registries</li><li>Trade-press &amp; industry reports</li><li>Competitor benchmarking</li></ul>
+      </div>
+    </div>
+
+    <h4 style="font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-dim);margin:34px 0 14px;">Analytical methodology</h4>
+    <div class="method-grid">
+      <div class="method"><div class="tag">01</div><h4>Sales-cycle-adjusted forecasting</h4><p>Weighting pipeline value by historical stage-to-close duration, not just raw deal probability.</p></div>
+      <div class="method"><div class="tag">02</div><h4>Root-cause diagnostic</h4><p>Mapping stage-transition delays back to structural causes instead of treating cycle length as the diagnosis itself.</p></div>
+      <div class="method"><div class="tag">03</div><h4>Market sizing by triangulation</h4><p>Bounding an addressable market range from public reference prices and disclosed capex, absent a direct published figure.</p></div>
+      <div class="method"><div class="tag">04</div><h4>Weighted win-probability scoring</h4><p>A stage-adjusted probability layer feeding the pipeline forecast, rather than flat per-stage assumptions.</p></div>
+      <div class="method"><div class="tag">05</div><h4>Medallion data architecture</h4><p>Layered bronze → silver → BI design so every forecast number can be regenerated on demand, not rebuilt by hand.</p></div>
+      <div class="method"><div class="tag">06</div><h4>Executive data storytelling</h4><p>Translating dispersed metrics into a single instrument-style readout built for a leadership decision, not a data dump.</p></div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="module" id="skills">
+    <div class="mod-head"><span class="mod-num">SUMMARY</span><h2>What this case demonstrates</h2></div>
+    <p style="max-width:760px;">With current bookings trending at a <b>279-day average deal cycle</b>, the business was on pace to close the year at roughly <b>27% of its annual revenue target</b> a gap of over <b>BRL 22.5M</b> that no amount of pipeline chasing alone could close without a change in approach. The forecast model set a hard cutoff date for new opportunities to realistically convert within the fiscal year, and flagged two overlooked deals, each with an <b>80% close probability</b>, that had sat over 15 days without follow-up, together representing a faster path to target than sourcing entirely new pipeline. A parallel root-cause review of 120 days of deal-stage data traced the backlog to six structural issues, fragmented communication, centralized approvals, limited rep autonomy, undefined process, resourcing concentrated on a single flagship program, and the absence of unified account ownership, reframing what looked like a sales-volume problem as, in large part, a workflow and capacity-allocation one.</p>
+    <p style="max-width:760px;">As a result, the recommendation split into two tracks: a focused risk review and upsell push on the two high-probability deals, paired with renewed follow-up and margin correction on the lower-probability ones still sitting in pipeline. That, combined with a low-maintenance retention strategy built around existing accounts already in the portfolio, freed the commercial team to pursue higher-margin technical opportunities in adjacent markets segments the company wasn't yet present in, but where growth investment and sector momentum pointed to stronger odds of contract success.</p>
+    <div class="skills">
+      <span class="skill">Revenue forecasting</span>
+      <span class="skill">Pipeline diagnostics</span>
+      <span class="skill">Root-cause analysis</span>
+      <span class="skill">Competitive intelligence</span>
+      <span class="skill">Market sizing</span>
+      <span class="skill">ETL / medallion architecture</span>
+      <span class="skill">Predictive win-scoring</span>
+      <span class="skill">Power BI</span>
+      <span class="skill">Executive communication</span>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><b style="color:var(--text)">Note on this case study.</b> This write-up is based on real analytical work I performed, presented here with a fictional company, program name, and adjusted figures to protect confidential business information. The methodology, structure, and reasoning are representative of the original analysis.</p>
+    <p class="foot-mono mono">© 2026 Aidê Vaz — Market &amp; Trade Intelligence</p>
+  </div>
+</footer>
+
+</body>
+</html>
