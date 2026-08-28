@@ -1,4 +1,4 @@
-<div align="center" "strong" > Market Intelligence Analysis </div>
+ **Market Intelligence Analysis**
 
 Case studies in market &amp; trade intelligence, data-driven analysis of trade flows, competitive positioning, and pricing strategy. Built with Power BI, SQL, and Python. Focus: China–Brazil trade, global logistics, and cross-border commercial strategy. This repository collects applied case studies in Market Intelligence and Business Analysis, built to demonstrate how I translate raw data into commercial and strategic decisions, not just how to build a dashboard. Each case study follows the same structure: **business question → data & methodology → analysis → insight → recommendation**, so a recruiter or hiring manager can quickly see the reasoning, not just the output.
 
