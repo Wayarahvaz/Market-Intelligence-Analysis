@@ -1,4 +1,4 @@
-# Monitoramento Comercial via E-mail # Monitoramento e Análise de Solicitações Comerciais via E-mail
+ Monitoramento e Análise de Solicitações Comerciais via E-mail
 
 Pipeline de captura, tratamento e análise de pedidos de cotação recebidos por e-mail, construído sobre Power Automate, Power Query e Python.
 
