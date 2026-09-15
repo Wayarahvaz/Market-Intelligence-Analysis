@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aidê Vaz — Portifolio Scroll</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,500&family=Quattrocento:wght@400;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=open-sauce-two@400,500,700&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --bg:#f8fafc;
+    --navy:#1e293b;
+    --teal:#0f766e;
+    --orange:#f59e0b;
+    --line-pink:#e8b4c8;
+    --line-olive:#b9b06a;
+    --line-lav:#c9b6dd;
+    --font-title:'Playfair Display', serif;
+    --cream:#fde9b4;
+    --font-subtitle:'Open Sauce Two', sans-serif;
+    --font-body:'Quattrocento', serif;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    font-family:var(--font-subtitle);
+    color:var(--navy);
+    overflow-x:hidden;
+  }
+
+  /* ---------- Fixed animated background ---------- */
+  .bg-lines{
+    position:fixed;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    pointer-events:none;
+  }
+  .bg-lines g{ transform-origin:50% 50%; }
+  .bg-lines .g1{ animation: drift1 22s ease-in-out infinite; }
+  .bg-lines .g2{ animation: drift2 28s ease-in-out infinite; }
+  .bg-lines .g3{ animation: drift3 34s ease-in-out infinite; }
+
+  @keyframes drift1{
+    0%,100%{ transform: translate(0,0) rotate(0deg); }
+    50%{ transform: translate(18px,-14px) rotate(0.6deg); }
+  }
+
+  @keyframes drift2{
+    0%,100%{ transform: translate(0,0) rotate(0deg); }
+    50%{ transform: translate(-22px,16px) rotate(-0.5deg); }
+  }
+
+  @keyframes drift3{
+    0%,100%{ transform: translate(0,0) rotate(0deg); }
+    50%{ transform: translate(14px,20px) rotate(0.4deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .bg-lines g{ animation:none !important; }
+  }
+
+  /* ---------- Nav ---------- */
+  header{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:10;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:26px 64px;
+    background:rgba(248,250,252,0.75);
+    backdrop-filter:blur(10px);
+  }
+
+  .logo{
+    font-family:var(--font-title);
+    font-weight:500;
+    font-size:1.55rem;
+    color:var(--teal);
+  }
+
+  nav{ display:flex; gap:12px; }
+  nav a{
+    font-family:var(--font-subtitle);
+    text-decoration:none;
+    font-size:0.72rem;
+    font-weight:600;
+    letter-spacing:0.02em;
+    color:var(--teal);
+    border:1px solid var(--teal);
+    border-radius:999px;
+    padding:10px 20px;
+    transition:all .2s ease;
+    white-space:nowrap;
+  }
+
+  nav a:hover{ background:rgba(15,118,110,0.08); }
+  nav a.active{
+    background:var(--orange);
+    border-color:var(--orange);
+    color:#fff;
+  }
+
+  main{ position:relative; z-index:2; }
+
+  section{
+    min-height:100vh;
+    padding:140px 64px 100px;
+    max-width:1100px;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
+
+  /* ---------- Hero ---------- */
+  #hero h1{
+    font-family:var(--font-title);
+    font-weight:500;
+    font-size:3.9rem;
+    line-height:1.22;
+    letter-spacing:-0.005em;
+  }
+  #hero h1 .accent{ color:var(--orange); }
+  #hero h1 .teal{ color:var(--teal); }
+  .scroll-hint{
+    margin-top:48px;
+    font-family:var(--font-subtitle);
+    font-size:0.75rem;
+    color:var(--teal);
+    opacity:0.7;
+  }
+
+  /* ---------- Section heading pattern ---------- */
+  .section-label{
+    font-family:var(--font-subtitle);
+    font-size:0.75rem;
+    font-weight:600;
+    letter-spacing:0.04em;
+    color:var(--orange);
+    margin-bottom:14px;
+  }
+
+  h2{
+    font-family:var(--font-title);
+    font-weight:500;
+    font-size:2.15rem;
+    line-height:1.35;
+    color:var(--navy);
+    max-width:700px;
+    margin-bottom:32px;
+  }
+
+  p.body-text{
+    font-family:var(--font-body);
+    max-width:640px;
+    line-height:1.8;
+    font-size:1.05rem;
+    color:var(--navy);
+    opacity:0.85;
+  }
+
+  /* ---------- About ---------- */
+  #about .about-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr;
+    gap:60px;
+    align-items:start;
+  }
+
+  .skill-dots{ list-style:none; }
+  .skill-dots li{
+    font-family:var(--font-body);
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:10px 0;
+    font-size:1rem;
+    border-bottom:1px solid rgba(30,41,59,0.08);
+  }
+
+  .skill-dots li::before{
+    content:"";
+    width:9px; height:9px;
+    border-radius:50%;
+    background:var(--orange);
+    flex-shrink:0;
+  }
+
+  .lang-bars h3{
+    font-family:var(--font-title);
+    font-weight:500;
+    font-size:1.3rem;
+    color:var(--navy);
+    margin-bottom:24px;
+  }
+
+  .lang-row{ margin-bottom:20px; }
+  .lang-row .label{
+    font-family:var(--font-subtitle);
+    display:flex; justify-content:space-between;
+    align-items:baseline;
+    font-size:0.9rem; font-weight:600; margin-bottom:8px;
+  }
+
+  .lang-row .label span:last-child{
+    font-weight:400; font-size:0.78rem; color:var(--teal); opacity:0.85;
+  }
+
+  .lang-track{
+    height:7px; background:var(--cream);
+    border-radius:999px; overflow:hidden;
+  }
+
+  .lang-fill{ height:100%; background:var(--teal); border-radius:999px; }
+
+  /* ---------- Stack ---------- */
+  .stack{
+    margin-bottom:32px;
+  }
+  .stack-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:36px 24px;
+    margin-top:56px;
+  }
+
+  .stack-card{
+    position:relative;
+    border-radius:18px;
+    padding:40px 20px 22px;
+    background:var(--cream);
+    text-align:center;
+  }
+
+  .stack-card .badge{
+    position:absolute;
+    top:-24px; left:50%;
+    transform:translateX(-50%);
+    width:56px; height:56px;
+    border-radius:50%;
+    background:var(--orange);
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.4rem;
+    overflow:hidden;
+  }
+.badge img{
+    width:60%;
+    height:60%;
+    object-fit:contain;
+  }
+
+  .stack-card h3{ font-family:var(--font-subtitle); font-size:0.95rem; font-weight:600; margin-bottom:8px; }
+  .stack-card p{ font-family:var(--font-body); font-size:0.85rem; opacity:0.75; line-height:1.6; }
+
+  /* ---------- Case Study template ---------- */
+  #case-study{ max-width:1100px; }
+  .cs-intro{
+    display:grid;
+    grid-template-columns:1fr 1.4fr;
+    gap:32px;
+    align-items:stretch;
+    margin-bottom:28px;
+  }
+
+  .cs-illustration{
+    display:flex; align-items:center; justify-content:center;
+    min-height:220px;
+    overflow:hidden;
+  }
+.cs-illustration img{
+    width:100%; height:100%;
+    object-fit:contain;
+    border-radius:18px;
+  }
+
+  .cs-illustration svg{ width:100%; height:100%; }
+  .cs-block{
+    font-family:var(--font-body);
+    border-radius:18px;
+    padding:28px;
+    font-size:0.95rem;
+    line-height:1.75;
+  }
+
+  .cs-problem{ background:var(--orange); color:#fff; }
+  .cs-tools{ display:flex; gap:16px; flex-wrap:wrap; margin:28px 0; }
+  .cs-tools span{
+    width:78px; height:78px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--orange); color:#fff;
+    font-size:0.66rem; text-align:center; font-weight:600;
+    overflow:hidden;
+  }
+  .cs-tools span img{
+    width:60%;
+    height:60%;
+    object-fit:contain;
+  }
+
+  .cs-photos{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:28px; }
+  .cs-photo{ border-radius:18px; overflow:hidden; min-height:180px; }
+  .cs-photo svg{ width:100%; height:100%; display:block; }
+  .cs-photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .cs-solution{ background:var(--orange); color:#fff; margin-bottom:28px; }
+  .cs-numbers{ display:flex; gap:16px; flex-wrap:wrap; }
+  .cs-numbers span{
+    width:88px; height:88px; border-radius:50%;
+    background:var(--orange); color:var(--navy);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-subtitle);
+    font-size:0.62rem; text-align:center; font-weight:700;
+  }
+  .cs-photos{
+    display:flex;
+    justify-content:center;
+    margin-bottom:28px;
+  }
+.cs-photo{
+    max-width:600px;
+    width:100%;
+    border-radius:18px;
+    overflow:hidden;
+  }
+
+  /* ---------- Experience ---------- */
+  .timeline{ margin-top:20px; }
+  .timeline-item{
+    display:grid;
+    grid-template-columns:140px 1fr;
+    gap:24px;
+    padding:22px 0;
+    border-bottom:1px solid rgba(30,41,59,0.08);
+    align-items:start;
+  }
+
+  .timeline-item .period{
+    font-family:var(--font-subtitle);
+    font-size:0.8rem;
+    color:var(--teal);
+    display:flex;
+    justify-content:flex-start;
+  }
+  .timeline-item .period img{
+    max-width:110px;
+    max-height:60px;
+    width:auto;
+    height:auto;
+    object-fit:contain;
+  }
+
+  .timeline-item h3{ font-family:var(--font-subtitle); font-size:1.05rem; font-weight:600; margin-bottom:6px; }
+  .timeline-item p{ font-family:var(--font-body); font-size:0.92rem; opacity:0.75; line-height:1.6; }
+
+  /* ---------- Contact ---------- */
+  #contact{ align-items:flex-start; }
+  .contact-links{ display:flex; gap:18px; margin-top:32px; }
+  .contact-links a{
+    width:64px; height:64px;
+    border-radius:16px;
+    background:#0a66c2;
+    display:flex; align-items:center; justify-content:center;
+    color:#fff;
+    transition:opacity .2s ease;
+  }
+
+  .contact-links a:hover{ opacity:0.85; }
+  .contact-links svg{ width:28px; height:28px; }
+
+  @media (max-width: 900px){
+    header{padding:20px 24px; flex-wrap:wrap; gap:14px;}
+    nav{flex-wrap:wrap;}
+    section{padding:120px 24px 80px;}
+    #hero h1{font-size:2.4rem;}
+    #about .about-grid{grid-template-columns:1fr;}
+    .timeline-item{grid-template-columns:1fr;}
+    .cs-intro{grid-template-columns:1fr;}
+    .cs-photos{grid-template-columns:1fr;}
+  }
+
+</style>
+</head>
+<body>
+
+  <svg class="bg-lines" viewBox="0 0 1440 1000" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <g class="g1" fill="none" stroke-width="1.4" opacity="0.5">
+      <path stroke="var(--line-olive)" d="M-50,60 C120,40 180,140 260,180 C340,220 380,320 320,400 C260,480 160,460 120,520" />
+      <path stroke="var(--line-pink)"  d="M-50,20 C160,0 260,120 380,170 C500,220 560,330 470,430 C380,530 240,490 170,570" />
+      <path stroke="var(--line-pink)"  d="M-50,180 C160,160 260,280 380,330 C500,380 570,480 480,580 C390,680 250,640 170,720" />
+    </g>
+    <g class="g2" fill="none" stroke-width="1.4" opacity="0.45">
+      <path stroke="var(--line-lav)" d="M900,140 C980,180 1040,260 1060,360 C1080,460 1130,520 1200,560 C1270,600 1330,660 1360,740" />
+      <path stroke="var(--line-lav)" d="M950,100 C1030,140 1090,220 1110,320 C1130,420 1180,480 1250,520 C1320,560 1380,620 1410,700" />
+      <path stroke="var(--line-pink)" d="M860,180 C940,230 990,320 1000,420 C1010,520 1050,590 1120,640 C1190,690 1240,760 1250,840" />
+    </g>
+    <g class="g3" fill="none" stroke-width="1.4" opacity="0.4">
+      <path stroke="var(--line-olive)" d="M-50,760 C130,740 190,840 270,880 C350,920 390,960 330,1000" />
+      <path stroke="var(--line-pink)"  d="M600,700 C700,740 760,820 780,900 C800,960 850,980 920,1000" />
+      <path stroke="var(--line-lav)"   d="M-50,860 C180,840 300,920 420,960 C480,980 500,990 520,1000" />
+    </g>
+  </svg>
+
+  <header>
+    <div class="logo">Aidê Vaz</div>
+    <nav id="nav-links">
+      <a href="#about" data-target="about">ABOUT ME</a>
+      <a href="#stack" data-target="stack">STACK</a>
+      <a href="#case-study" data-target="case-study">CASE STUDY</a>
+      <a href="#experience" data-target="experience">EXPERIENCE</a>
+      <a href="#contact" data-target="contact">GET IN CONTACT</a>
+    </nav>
+  </header>
+
+  <main>
+<section id="hero">
+      <h1><span class="accent">Transforming Data</span> <span class="teal">into</span><br><span class="teal">Business Decisions</span></h1>
+      <div class="scroll-hint">↓ scroll para explorar</div>
+    </section>
+
+    <section id="about">
+      <div class="section-label">01 — SOBRE</div>
+      <h2>Where geopolitics, data &amp; business strategy meet</h2>
+      <div class="about-grid">
+        <div>
+          <p class="body-text">
+            Market and Geopolitical Intelligence Analyst with 6+ years bridging political risk, sector analysis, and data science across global trade, logistics, and heavy industry — energy, mining, and raw-materials extraction. An International Relations background combined with hands-on technical depth (SQL, DAX, Python, Power BI, Google BigQuery, AWS Glue, NoSQL) turns regulatory shifts, commodity cycles, and country-risk signals into corporate intelligence and due-diligence-grade analysis for decision-makers operating across borders. Track record includes leading an internal intelligence initiative that converted raw data into strategy, driving a 374% gross profit increase ($1.9M) and 198% revenue growth through automated dashboards and sector-risk reporting. Comfortable reading government tenders, auction calendars, and policy documents across commodity supply chains, and building the data infrastructure — cloud data warehousing, workflow automation, data storytelling — that makes that reading actionable for trading houses, majors, and risk-advisory teams alike. </p>
+          <ul class="skill-dots">
+            <li>Data Strategy</li>
+            <li>Data Architecture</li>
+            <li>Business Intelligence</li>
+            <li>Data Science</li>
+            <li>Geopolitical Reading</li>
+            <li>Data Modeling</li>
+          </ul>
+        </div>
+        <div class="lang-bars">
+          <h3>Languages</h3>
+          <div class="lang-row">
+            <div class="label"><span>English</span><span>Fluent</span></div>
+            <div class="lang-track"><div class="lang-fill" style="width:95%"></div></div>
+          </div>
+          <div class="lang-row">
+            <div class="label"><span>Mandarim</span><span>In Progress · HSK 1</span></div>
+            <div class="lang-track"><div class="lang-fill" style="width:35%"></div></div>
+          </div>
+          <div class="lang-row">
+            <div class="label"><span>Hungarian</span><span>Basic</span></div>
+            <div class="lang-track"><div class="lang-fill" style="width:20%"></div></div>
+          </div>
+          <div class="lang-row">
+            <div class="label"><span>Spanish</span><span>Professional</span></div>
+            <div class="lang-track"><div class="lang-fill" style="width:80%"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="stack">
+      <div class="section-label">02 — STACK</div>
+      <h2>Tools I use to turn data into decisions</h2>
+      <div class="stack-grid">
+        <div class="stack-card">
+          <div class="badge">📊</div>
+          <h3>Power BI</h3>
+          <p>DAX, Power Query, dashboards interativos</p>
+        </div>
+        <div class="stack-card">
+          <div class="badge">🗄️</div>
+          <h3>SQL</h3>
+          <p>SQL Server, MySQL, BigQuery, modelagem</p>
+        </div>
+        <div class="stack-card">
+          <div class="badge">🐍</div>
+          <h3>Python</h3>
+          <p>Pandas, ETL, automação, APIs</p>
+        </div>
+        <div class="stack-card">
+          <div class="badge">🔗</div>
+          <h3>CRM &amp; Automação</h3>
+          <p>Power Automate, RevOps, integrações</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="case-study">
+      <div class="section-label">03 — CASE STUDY</div>
+      <h2 style="font-family: var(--font-title);">90-Day Sale & Market Intelligence Report </h2>
+
+      <div class="cs-intro">
+        <div class="cs-illustration">
+          <img src="Image/number (2).png">
+        </div>
+        <div class="cs-block cs-problem">
+          <strong>The business problem:</strong> An Energy solution supplier to national power transmission sector was tracking at 18.9% of its annual 
+          revenue target with no clear answer for why. Sales data lived in three disconnected places — a legacy spreadsheet, the CRM, and the inbound commercial mailbox — 
+          so leadership couldn't tell whether the gap was a demand problem, a conversion problem, or something happening after a deal was already quoted. 
+          This report pulls those three sources into one 90-day analysis to answer that question directly: <strong> only 2% of inbound e-mails ever convert to closed revenue,
+          but the pipeline already open is more than large enough to close the gap </strong> — the real constraint is that 72% of lost deals fail for reasons inside the company's own control 
+         <strong> (pricing and delivery timelines, not client decisions), </strong>
+          and 88% of closed revenue sits in a single client and two service lines. The report turns that diagnosis into an operating-model fix — named account ownership, 
+          a real-time CRM as single source of truth, cascading sub-targets, and a standing hand-off from Market Intelligence to Sales on which regulated auctions and sector 
+          investments to chase next — closing the loop between <strong> "here's what's wrong" </strong> and <strong>"here's what to do about it."</strong>
+        </div>
+      </div>
+
+      <div class="stack">
+      <div class="section-label">Tools</div>
+      <h2>Tools used on this Study Case</h2>
+      <div class="stack-grid">
+        <div class="stack-card">
+          <div class="badge"><img src="Image/number (4).png"> </div>
+          <h3>Power BI</h3>
+          <p>Pareto curve, cycle-time chart, loss breakdown, revenue consolidation, target tracking, deal table </p>
+        </div>
+        <div class="stack-card">
+          <div class="badge"><img src="Image/CRM.png"></div>
+          <h3>CRM SYSTEM</h3>
+          <p>Pipeline tracking, Win-rate calculation, Funnel data</p>
+        </div>
+        <div class="stack-card">
+          <div class="badge">🐍</div>
+          <h3>Python</h3>
+          <p>Chart Regeneration, Data Anonymization, Docx automation</p>
+        </div>
+        <div class="stack-card">
+          <div class="badge"><img src="Image/number.png"></div>
+          <h3>Power Automate</h3>
+          <p>Daily E-mail capture, Folder monitoring, CRM logging </p>
+        </div>
+      </div>
+      </div>
+
+      <div class="cs-block cs-method" style="background:rgba(30,41,59,0.06); margin-bottom:28px;">
+        <strong>Methodology:</strong> To develop this document, a data set well-built enough to describe sales tendency and behavior was necessary. This data originates from three sources: the Company's project-management spreadsheet, its CRM, and the commercial mailbox that receives inbound requests for quotation. Even with a solid base, a date filter was applied to develop an analysis based on numbers instead of impressions. The window is the last 90 days.
+This means the analysis does not aim to replace the sales methodology already in place; instead, it establishes a statistical process to prevent an annual revenue gap and a lack of visibility for the sales team.
+This document aims to fill the gap between the numbers and the overwhelming feeling of lacking strategy, raising the following questions:<strong> How are sales going? How are demand requests trending? How much did we sell? How much will we sell at the current pace? What is the current sales scenario? What are the prospects for next year? Which companies can we target? Who are our main clients? How much did we lose, and why? How do we avoid losses? What are the risks?</strong>
+
+      </div>
+
+<div class="cs-photos">
+  <div class="cs-photo">
+    <!-- placeholder: trocar por captura de tela / imagem real -->
+    <img src="Image/pareto .png">
+  </div>
+</div>
+
+      <div class="cs-block cs-solution">
+        <strong>Conclusion:</strong> Based on 90 days of analysis, the Company closed <strong>$ 6.05 million against a $ 32 million annual target (18.9%) </strong>, a pace that — if unchanged — would close the year at <strong>27% of target ($ 8.64 million in new contracts). </strong>  Demand itself is not the constraint: 310 commercial e-mails converted to only 38 CRM opportunities and 7 closed deals, a roughly 2.3% inbound win rate, while the qualified pipeline of <strong> $ 57.8 million across 14 deals</strong>  is more than enough to close the gap if conversion improves.
+The current scenario is one of concentration rather than scarcity: <strong> A alone accounts for 79.81% of closed revenue,</strong>  and Onsite Services together with Equipament supply for <strong>  88% </strong> of it, so growth depends on diversifying by client and by scope rather than generating more leads. Of the <strong> $ 4.94 million lost in the same window, 72% ($ 3.5 million)</strong>  traces to commercial terms and delivery timelines inside the Company's own control rather than client decisions, which is why avoiding these losses starts internally — with the account-ownership, CRM, and target-cascade changes recommended above — not with a market fix.
+On the market side, the same answer extends into next year: the named sector signals above and the 2026–2027 auction cycle (a record 6,091 projects registered for the first battery auction, over 6 GW of battery demand projected by 2035, and an approximately <strong> $ 2.5 billion transmission auction </strong> including the country's first BESS transmission lot) give the Company a dated, external reason to pursue the diversification recommended in this report — both by account and by scope.
+Read together,<strong> the target is not out of reach;</strong> closing the gap depends less on generating additional demand and more on commercial alignment. Internal approval cycles that run longer than the client's own deadline are themselves a source of lost deals, which makes a faster, better-prepared path for commercial and technical proposals on priority accounts a priority. Account diversification matters, but only if it comes with the technical and commercial structure to support it — dedicated, qualified sales staff who build client trust from the first proposal, rather than repeated rework caused by under-prepared bids. Shortening that revision-and-rework cycle is what frees the sales team to pursue better, more strategic opportunities, opening a new portfolio of accounts that will demand its own focused, dedicated sales attention.
+
+      </div>
+
+<div class="stack">
+      <div class="stack-grid">
+        <div class="stack-card">
+          <div class="badge"><img src="Image/pessoinhas.png"> </div>
+          <h3>Revenue Pace:</h3>
+          <p>18.9% of annual target reached; current pace projects only 27% by year-end </p>
+        </div>
+        <div class="stack-card">
+          <div class="badge"><img src="Image/pessoinhas 2.png"></div>
+          <h3>Conversion Funnel:</h3>
+          <p>2.3% of inbound e-mails convert to closed revenue (88% drop before reaching CRM)</p>
+        </div>
+        <div class="stack-card">
+          <div class="badge"><img src="Image/pessoinhas 9.png"> </div>
+          <h3>Concentration Risk:</h3>
+          <p>79.81% of revenue from one client; 88% from two service lines</p>
+        </div>
+        <div class="stack-card">
+          <div class="badge"><img src="Image/pessoinhas 3.png"></div>
+          <h3>Lost Revenue</h3>
+          <p>$4.94M lost in 90 days — 72% from internal, 
+            controllable causes (pricing/delivery), not client decisions</p>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="section-label">04 — EXPERIÊNCIA</div>
+      <h2>Career timeline</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="period"><img src="Image/NARI_BRASIL_logo_4K_transparente.png"></div>
+          <div>
+            <h3>Nari Brasil Holding</h3>
+            <p><strong>2026 - Market Intelligence Analyst</strong></p>
+            <p>Deliver strategic market intelligence helps the organization navigate competitive landscapes and consumer behavior through in-depth data analysis.</p>
+            <p>  </p>
+<p>Bridge the gap between raw data and business strategy by integrating data management, data architecture, and advanced analytics with marketing insights.</p>
+<p>Perform market research, develop competitive intelligence, and build Power BI performance dashboards to support executive decision-making.</p>
+<p>Manage data assets, architect scalable data solutions, and apply data science techniques to support marketing operations.</p>
+<p>Convert market uncertainty into strategic clarity by building a solid, scalable, data-driven foundation for organizational planning.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="period"><img src="Image/Logo_Coli_Oficial.png"></div>
+          <div>
+            <h3>COLI Shipping &amp; Transport do Brasil</h3>
+            <p><strong>2023 - 2026: Sales Executive &amp; Market Intelligence Analyst</strong></p> 
+            <p>Orchestrated data strategies that drove a 374% gross profit increase ($1.9M) and 198% revenue growth by developing automated Power BI dashboards for real-time KPI monitoring.</p>
+            <p>Streamlined executive decision-making through monthly data storytelling reports, aligning international pricing strategy with macroeconomic trends and cargo demand.</p>
+            <p>Led strategic commercial operations for global heavy machinery manufacturers and trading firms, specializing in the China–Brazil trade lane and high-value project cargo cycles.</p>
+            <p>Designed and led a proprietary market intelligence project applying International Relations methodologies and investment analysis to track global trade flows, using Pipedrive CRM and Skychart to convert raw data into high-value sales leads.</p>
+            <p>Managed end-to-end CRM-based project tracking to monitor team productivity, account adherence, and feasibility, ensuring commercial efforts stayed aligned with strategic goals and operational capacity.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-label">05 — GET IN CONTACT</div>
+      <h2>Get in contact</h2>
+      <p class="body-text">Always glad to talk shop, sector trends, data pipelines, or where geopolitics and commodities intersect. If something here resonates with a role you're hiring for, or you just want to compare notes, reach out. </p>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/aid%C3%AA-vaz-470871172/" aria-label="LinkedIn" title="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.14 1.44-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+        </a>
+        <a href="mailto:aidevaz0310@outlook.com" aria-label="E-mail" title="E-mail">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+<script>
+  const sections = document.querySelectorAll('main section[id]');
+  const navLinks = document.querySelectorAll('#nav-links a');
+
+  const setActive = (id) => {
+    navLinks.forEach(a => a.classList.toggle('active', a.dataset.target === id));
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) setActive(entry.target.id);
+    });
+  }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
