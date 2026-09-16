@@ -33,6 +33,53 @@
     overflow-x:hidden;
   }
 
+/* Regras de bloco da formação */ 
+
+.education-grid{
+    grid-column:1 / -1;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:24px;
+    margin-top:32px;
+  }
+.education-card{
+    background:var(--teal);
+    color:#fff;
+    border-radius:18px;
+    padding:24px;
+  }
+.education-card .edu-badge{
+    width:48px; height:48px;
+    border-radius:50%;
+    background:#fff;
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    margin-bottom:16px;
+  }
+.education-card .edu-badge img{
+    width:70%; height:70%;
+    object-fit:contain;
+  }
+.education-card h3{
+    font-family:var(--font-subtitle);
+    font-size:0.95rem;
+    font-weight:600;
+    margin-bottom:4px;
+  }
+.education-card .edu-inst{
+    display:block;
+    font-family:var(--font-subtitle);
+    font-size:0.75rem;
+    opacity:0.85;
+    margin-bottom:10px;
+  }
+.education-card p{
+    font-family:var(--font-body);
+    font-size:0.82rem;
+    line-height:1.6;
+    opacity:0.9;
+  }
+
   /* ---------- Fixed animated background ---------- */
   .bg-lines{
     position:fixed;
@@ -424,7 +471,7 @@
       <div class="scroll-hint">↓ scroll para explorar</div>
     </section>
 
-    <section id="about">
+ <section id="about">
       <div class="section-label">01 — SOBRE</div>
       <h2>Where geopolitics, data &amp; business strategy meet</h2>
       <div class="about-grid">
@@ -459,6 +506,34 @@
             <div class="lang-track"><div class="lang-fill" style="width:80%"></div></div>
           </div>
         </div>
+
+        <div class="education-grid">
+          <div class="education-card">
+            <div class="edu-badge"><img src="Image/Unifesp_completa_policromia_RGB.png" alt="UNIFESP"></div>
+            <h3>Bachalor's Dregree International Relations </h3>
+            <span class="edu-inst">UNIFESP - Escola Paulista de Política Economia e Negócios</span>
+            <p>Geopolitical & Country Risk · Political Risk Analysis · International Trade Policy · Regulatory & Compliance Analysis</p>
+          </div>
+          <div class="education-card">
+            <div class="edu-badge"><img src="Image/Alura.png" alt="Alura"></div>
+            <h3>Data Analysis Specialization </h3>
+            <span class="edu-inst">Alura</span>
+            <p>Corporate Diplomacy & Stakeholder Strategy · International Finance & FX Markets · Foreign Policy Analysis Applied to Business · Investment Attraction & Paradiplomacy</p>
+          </div>
+          <div class="education-card">
+            <div class="edu-badge"><img src="Image/relacoesinternacionais_logo.jpg" alt="ESRI - Escola Superior de Relações Interacionais"></div>
+            <h3>International Business Specialization </h3>
+            <span class="edu-inst">ESRI - Escola Superior de Relações Interacionais</span>
+            <p>International Negotiation · Cross-Border Risk & Crisis Management · Market Entry Strategy (FDI, Joint Ventures) · International Business Consulting </p>
+          </div>
+          <div class="education-card">
+            <div class="edu-badge"><img src="Image/relacoesinternacionais_logo.jpg" alt="ESRI - Escola Superior de Relações Interacionais"></div>
+            <h3>Coorporate Diplomacy Specialization </h3>
+            <span class="edu-inst">ESRI - Escola Superior de Relações Interacionais</span>
+            <p>Corporate Diplomacy & Stakeholder Strategy · International Finance & FX Markets · Foreign Policy Analysis Applied to Business · Investment Attraction & Paradiplomacy</p>
+          </div>
+        </div>
+
       </div>
     </section>
 
