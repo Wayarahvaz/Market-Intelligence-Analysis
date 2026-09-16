@@ -93,20 +93,26 @@
   .bg-lines .g1{ animation: drift1 22s ease-in-out infinite; }
   .bg-lines .g2{ animation: drift2 28s ease-in-out infinite; }
   .bg-lines .g3{ animation: drift3 34s ease-in-out infinite; }
+  .bg-lines .g4{ animation: drift4 30s ease-in-out infinite; }
 
   @keyframes drift1{
     0%,100%{ transform: translate(0,0) rotate(0deg); }
-    50%{ transform: translate(18px,-14px) rotate(0.6deg); }
+    50%{ transform: translate(30px,-24px) rotate(1.2deg); }
   }
 
   @keyframes drift2{
     0%,100%{ transform: translate(0,0) rotate(0deg); }
-    50%{ transform: translate(-22px,16px) rotate(-0.5deg); }
+    50%{ transform: translate(-36px,26px) rotate(-1deg); }
   }
 
   @keyframes drift3{
     0%,100%{ transform: translate(0,0) rotate(0deg); }
-    50%{ transform: translate(14px,20px) rotate(0.4deg); }
+    50%{ transform: translate(24px,32px) rotate(0.8deg); }
+  }
+
+  @keyframes drift4{
+    0%,100%{ transform: translate(0,0) rotate(0deg); }
+    50%{ transform: translate(-20px,-18px) rotate(-0.7deg); }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -164,7 +170,7 @@
     margin:0 auto;
     display:flex;
     flex-direction:column;
-    justify-content:center;
+    justify-content:flex-start;
   }
 
   /* ---------- Hero ---------- */
@@ -183,6 +189,76 @@
     font-size:0.75rem;
     color:var(--teal);
     opacity:0.7;
+  }
+
+#hero{
+    position:relative;
+    overflow:hidden;
+  }
+#hero .deco-portrait{
+    position:absolute;
+    right:10px;
+    bottom:0;
+    width:860px;
+    height:990px;
+    z-index:0;
+    overflow:hidden;
+  }
+
+  #contact{
+    position:relative;
+    overflow:hidden;
+  }
+#contact .deco-circle{
+    position:absolute;
+    right:20px;
+    top:80px;
+    width:460px;
+    height:460px;
+    border-radius:50%;
+    overflow:hidden;
+    z-index:0;
+  }
+#contact .deco-circle img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+#contact .section-label,
+#contact h2,
+#contact p.body-text,
+#contact .contact-links{
+    position:relative;
+    z-index:2;
+  }
+
+#hero .deco-portrait img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    object-position:bottom;
+    display:block;
+  }
+#hero h1, #hero .scroll-hint{
+    position:relative;
+    z-index:2;
+  }
+.deco-banner{
+    max-width:620px;
+    height:540px;
+    margin:0 auto 14px;
+    border-radius:40%;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+.deco-banner img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
   }
 
   /* ---------- Section heading pattern ---------- */
@@ -220,6 +296,10 @@
     grid-template-columns:1.3fr 1fr;
     gap:60px;
     align-items:start;
+  }
+  #about{
+    min-height:auto;
+    padding-bottom:80px;
   }
 
   .skill-dots{ list-style:none; }
@@ -270,7 +350,8 @@
 
   /* ---------- Stack ---------- */
   .stack{
-    margin-bottom:32px;
+    min-height:auto;
+    padding-bottom:60px;
   }
   .stack-grid{
     display:grid;
@@ -336,7 +417,21 @@
     font-size:0.95rem;
     line-height:1.75;
   }
-
+.deco-circle{
+    border-radius:50%;
+    overflow:hidden;
+  }
+.deco-square{
+    border-radius:18px;
+    overflow:hidden;
+  }
+.deco-circle img,
+.deco-square img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
   .cs-problem{ background:var(--orange); color:#fff; }
   .cs-tools{ display:flex; gap:16px; flex-wrap:wrap; margin:28px 0; }
   .cs-tools span{
@@ -376,6 +471,44 @@
     border-radius:18px;
     overflow:hidden;
   }
+
+  .cs-divider{
+    border-top:2px dashed rgba(30,41,59,0.15);
+    margin:56px 0 40px;
+  }
+.cs-subhead{
+    font-family:var(--font-title);
+    font-weight:500;
+    font-size:1.3rem;
+    margin:32px 0 12px;
+    color:var(--navy);
+  }
+.cs-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:24px;
+    font-family:var(--font-body);
+    font-size:0.85rem;
+  }
+.cs-table th, .cs-table td{
+    border:1px solid rgba(30,41,59,0.12);
+    padding:10px 12px;
+    text-align:left;
+    vertical-align:top;
+  }
+.cs-table th{
+    background:var(--teal);
+    color:#fff;
+    font-family:var(--font-subtitle);
+    font-weight:600;
+    font-size:0.78rem;
+  }
+.cs-list{
+    margin:0 0 24px 20px;
+    font-family:var(--font-body);
+    line-height:1.75;
+  }
+.cs-list li{ margin-bottom:8px; }
 
   /* ---------- Experience ---------- */
   .timeline{ margin-top:20px; }
@@ -441,16 +574,24 @@
       <path stroke="var(--line-olive)" d="M-50,60 C120,40 180,140 260,180 C340,220 380,320 320,400 C260,480 160,460 120,520" />
       <path stroke="var(--line-pink)"  d="M-50,20 C160,0 260,120 380,170 C500,220 560,330 470,430 C380,530 240,490 170,570" />
       <path stroke="var(--line-pink)"  d="M-50,180 C160,160 260,280 380,330 C500,380 570,480 480,580 C390,680 250,640 170,720" />
+      <path stroke="var(--line-olive)" d="M-50,240 C170,220 250,320 350,360 C450,400 520,470 440,540 C360,610 260,590 200,650" />
     </g>
     <g class="g2" fill="none" stroke-width="1.4" opacity="0.45">
       <path stroke="var(--line-lav)" d="M900,140 C980,180 1040,260 1060,360 C1080,460 1130,520 1200,560 C1270,600 1330,660 1360,740" />
       <path stroke="var(--line-lav)" d="M950,100 C1030,140 1090,220 1110,320 C1130,420 1180,480 1250,520 C1320,560 1380,620 1410,700" />
       <path stroke="var(--line-pink)" d="M860,180 C940,230 990,320 1000,420 C1010,520 1050,590 1120,640 C1190,690 1240,760 1250,840" />
+      <path stroke="var(--line-lav)" d="M1000,60 C1070,110 1110,190 1120,280 C1130,370 1170,430 1230,470 C1290,510 1340,570 1360,650" />
     </g>
     <g class="g3" fill="none" stroke-width="1.4" opacity="0.4">
       <path stroke="var(--line-olive)" d="M-50,760 C130,740 190,840 270,880 C350,920 390,960 330,1000" />
       <path stroke="var(--line-pink)"  d="M600,700 C700,740 760,820 780,900 C800,960 850,980 920,1000" />
       <path stroke="var(--line-lav)"   d="M-50,860 C180,840 300,920 420,960 C480,980 500,990 520,1000" />
+      <path stroke="var(--line-pink)"  d="M300,780 C400,810 450,870 470,930 C480,960 500,980 530,1000" />
+    </g>
+    <g class="g4" fill="none" stroke-width="1.2" opacity="0.35">
+      <path stroke="var(--line-lav)"   d="M200,0 C260,60 300,140 280,220 C260,300 300,360 370,400 C440,440 480,500 460,570" />
+      <path stroke="var(--line-olive)" d="M700,0 C740,60 730,130 690,180 C650,230 660,290 710,330 C760,370 780,430 750,490" />
+      <path stroke="var(--line-pink)"  d="M1150,900 C1220,880 1280,920 1320,970 C1350,1000 1390,1010 1430,1000" />
     </g>
   </svg>
 
@@ -469,7 +610,12 @@
 <section id="hero">
       <h1><span class="accent">Transforming Data</span> <span class="teal">into</span><br><span class="teal">Business Decisions</span></h1>
       <div class="scroll-hint">↓ scroll para explorar</div>
+
+     <div class="deco-portrait">
+    <img src="Image/Illustration gif2.gif" alt="">
+  </div>
     </section>
+
 
  <section id="about">
       <div class="section-label">01 — SOBRE</div>
@@ -536,6 +682,16 @@
 
       </div>
     </section>
+      </div>
+    </section>
+      </div>
+    </section>
+
+ 
+    <div class="deco-banner">
+      
+      <img src="Image/Illustration gif1.gif" alt="">
+    </div>
 
     <section id="stack">
       <div class="section-label">02 — STACK</div>
@@ -570,7 +726,7 @@
 
       <div class="cs-intro">
         <div class="cs-illustration">
-          <img src="Image/number (2).png">
+          <img src="Image/number-animated.gif">
         </div>
         <div class="cs-block cs-problem">
           <strong>The business problem:</strong> An Energy solution supplier to national power transmission sector was tracking at 18.9% of its annual 
@@ -659,6 +815,97 @@ Read together,<strong> the target is not out of reach;</strong> closing the gap 
         </div>
       </div>
       </div>
+
+      <div class="cs-divider"></div>
+
+<div class="section-label">CASE STUDY 02</div>
+<h2>Commercial Email Request Monitoring &amp; Analysis</h2>
+<p class="body-text" style="margin-bottom:28px;">A pipeline to capture, clean, and analyze quotation requests received by email, built on Power Automate, Power Query, and Python.</p>
+
+<div class="cs-block cs-problem">
+  <strong>The problem:</strong> The commercial mailbox received quotation, budget, and proposal requests mixed in with the rest of the daily workflow. Manual tracking was unworkable given the volume of competing tasks, and there was no structured history to support funnel analysis.
+</div>
+
+<div class="cs-tools">
+  <span><img src="Image/number.png" alt="Power Automate"></span>
+  <span><img src="Image/Microsoft_Excel-Logo.wine.png" alt="Excel Online"></span>
+  <span><img src="Image/Powerquery.png" alt="Power Query"></span>
+  <span><img src="Image/Python-logo-notext.png" alt="Python"></span>
+  <span><img src="Image/number (4).png" alt="Power BI"></span>
+</div>
+
+<div class="cs-subhead">What this project solves</div>
+<ul class="cs-list">
+  <li><strong>Continuous monitoring</strong> — automatic capture of new commercial requests, ready for bulk CRM entry.</li>
+  <li><strong>Historical reconstruction</strong> — full extraction of the mailbox to size request volume and feed funnel analysis.</li>
+  <li><strong>Reproducible ETL</strong> — turning raw data into an analytical base (client, thread, category) in both Power Query and Python.</li>
+</ul>
+
+<div class="cs-block cs-method" style="background:rgba(30,41,59,0.06); margin-bottom:8px;">
+  <strong>Architecture:</strong> Email (Outlook) → Power Automate → Excel (OneDrive) → ETL (Power Query / Python) → Analysis (Power BI). Built entirely on the Microsoft Power Platform, avoiding the additional administrative approvals (Entra ID / Azure AD) that had blocked the earlier Microsoft Graph API prototype.
+</div>
+
+<table class="cs-table">
+  <tr><th>Layer</th><th>Tool</th><th>Function</th></tr>
+  <tr><td>Capture</td><td>Power Automate</td><td>Continuous mailbox monitoring and one-off historical capture</td></tr>
+  <tr><td>Storage</td><td>Excel Online (OneDrive)</td><td>Structured table as the raw layer of captured data</td></tr>
+  <tr><td>Transformation</td><td>Power Query + Python (pandas)</td><td>Cleaning, client extraction, categorization, and thread aggregation</td></tr>
+  <tr><td>Analysis</td><td>Power BI / Pivot Table</td><td>Consolidation of funnel metrics (volume, category, client)</td></tr>
+</table>
+
+<div class="cs-subhead">Flow 1 — Daily Monitoring</div>
+<p class="body-text" style="margin-bottom:16px;">An automated, always-on flow ("Monitorar cotações - Comercial") that captures new requests as they arrive.</p>
+<table class="cs-table">
+  <tr><th>Step</th><th>Action</th><th>Technical detail</th></tr>
+  <tr><td>1. Trigger</td><td>When a new email arrives (V3)</td><td>Watches the "Commercial" folder of the personal mailbox; fires on every new item detected</td></tr>
+  <tr><td>2. Cleanup</td><td>Html to text</td><td>Converts the email body (HTML) into plain text, stripping markup and styles</td></tr>
+  <tr><td>3. Filter</td><td>Condition (OR)</td><td>Checks whether the subject or body contains keywords: quotation, budget, proposal, price</td></tr>
+  <tr><td>4. Persistence</td><td>Add a row into a table</td><td>Writes Date, Sender, Subject, Body, Source, and ConversationId to an Excel table on OneDrive</td></tr>
+</table>
+<p class="body-text" style="margin-bottom:24px; font-size:0.85rem; opacity:0.75;">The trigger points to a personal folder ("Commercial"), populated by an Outlook rule that automatically moves messages from the commercial list — avoiding the need for shared-mailbox access.</p>
+
+<div class="cs-subhead">Flow 2 — Historical Reconstruction</div>
+<p class="body-text" style="margin-bottom:16px;">A manual, on-demand flow ("Histórico - Comercial") used to backfill the base with retroactive data, so analysis could start without waiting months for organic capture from Flow 1.</p>
+<table class="cs-table">
+  <tr><th>Step</th><th>Action</th><th>Technical detail</th></tr>
+  <tr><td>1. Trigger</td><td>Manually trigger a flow</td><td>A single, on-demand run, with no automatic recurrence</td></tr>
+  <tr><td>2. Extraction</td><td>Get emails (V3)</td><td>Searches the whole folder, no date filter, limited to 1,000 items per run</td></tr>
+  <tr><td>3. Iteration</td><td>Apply to each</td><td>Processes each returned email individually, avoiding context duplication</td></tr>
+  <tr><td>4. Cleanup + Filter</td><td>Html to text + Condition</td><td>Same logic as Flow 1, with coalesce() protection against emails with no body</td></tr>
+  <tr><td>5. Persistence</td><td>Add a row into a table</td><td>Writes to the same table used by daily monitoring, unifying history and ongoing capture</td></tr>
+</table>
+
+<div class="cs-subhead">Transformation Layer (ETL)</div>
+<table class="cs-table">
+  <tr><th>Step</th><th>Transformation applied</th></tr>
+  <tr><td>Deduplication</td><td>Removes identical rows (sender + subject + date), which can arise from overlap between daily monitoring and historical extraction</td></tr>
+  <tr><td>Client extraction</td><td>Splits the sender's email at the @ delimiter, isolating the domain as the client identifier</td></tr>
+  <tr><td>Thread identification</td><td>Groups by ConversationId (Outlook's native identifier), more reliable than comparing subject text</td></tr>
+  <tr><td>Type classification</td><td>The first message in a thread is flagged "New Request"; subsequent ones as "Update"</td></tr>
+  <tr><td>Categorization</td><td>Keyword-based classification into Quotation, Technical Proposal, or Other</td></tr>
+  <tr><td>Aggregation</td><td>Consolidation by thread: request date, last update date, negotiation duration, and interaction count</td></tr>
+</table>
+
+<div class="cs-subhead">Technical decisions &amp; trade-offs</div>
+<ul class="cs-list">
+  <li><strong>Power Automate over Microsoft Graph API</strong> — the initial Python + MSAL + Graph API approach required Entra ID admin approval (Mail.Read), creating a blocking dependency. Power Automate sidestepped this because the Office 365 Outlook connectors already had pre-approved consent on the tenant.</li>
+  <li><strong>Keyword classification over AI (AI Builder)</strong> — AI Builder showed configuration instability and depended on Power Platform capacity credits; keyword filtering was kept for this phase.</li>
+  <li><strong>Grouping by ConversationId over subject text</strong> — normalizing subject text (stripping RE:/RES:/FW:) is fragile across language and formatting variations; the native ConversationId solves this deterministically.</li>
+  <li><strong>Manual over automatic pagination</strong> — "Get emails (V3)" exposes no native pagination above ~1,000 items; extraction was capped at 1,000 items (~99.8% of the mailbox) instead of building a manual pagination loop, prioritizing maintainability.</li>
+</ul>
+
+<div class="cs-subhead">Results</div>
+<p class="body-text" style="margin-bottom:24px;">After ETL and thread grouping, the historical extraction identified dozens of distinct commercial requests, categorized by type and tied to the client's email domain — a structured base to answer volume, category, and client concentration on an ongoing basis, without manual effort.</p>
+
+<div class="cs-subhead">Future improvements</div>
+<ul class="cs-list">
+  <li>Semantic classification via AI Builder or a language model, replacing keyword filtering</li>
+  <li>Automatic extraction of the requester's name and company from the email signature</li>
+  <li>Migrating the analysis layer to Power BI, linked to the CRM, with average time-to-proposal calculated</li>
+  <li>SQL-based ETL for more scalable consolidation and querying of requests</li>
+  <li>A machine learning model to classify email intent, replacing the thread-based heuristic</li>
+</ul>
+
     </section>
 
     <section id="experience">
@@ -704,6 +951,10 @@ Read together,<strong> the target is not out of reach;</strong> closing the gap 
         <a href="mailto:aidevaz0310@outlook.com" aria-label="E-mail" title="E-mail">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
         </a>
+      </div>
+
+      <div class="deco-circle">
+        <img src="Image/GIF-GRL-.gif" alt="">
       </div>
     </section>
 
