@@ -990,6 +990,314 @@ Read together,<strong> the target is not out of reach;</strong> closing the gap 
   <li>A machine learning model to classify email intent, replacing the thread-based heuristic</li>
 </ul>
 
+      <!-- ===================== CASE STUDY 03 ===================== -->
+      <!-- Colar logo depois do bloco "Future improvements" do Case Study 02,
+           antes do </section> da seção #case-study.
+           O <style> abaixo vale só para .cs3 e usa as variáveis do seu :root. -->
+
+<style>
+  .cs3{ --cs3-line:rgba(30,41,59,0.10); --cs3-soft:rgba(15,118,110,0.07); }
+  .cs3 .cs3-lead{ margin-bottom:22px; }
+
+  /* pills de stack */
+  .cs3 .cs3-tags{ display:flex; flex-wrap:wrap; gap:8px; margin:0 0 36px; }
+  .cs3 .cs3-tags span{
+    font-family:var(--font-subtitle); font-size:0.7rem; font-weight:600; letter-spacing:0.02em;
+    color:var(--teal); border:1px solid var(--teal); border-radius:999px; padding:7px 14px; background:#fff;
+  }
+
+  /* números de destaque */
+  .cs3 .cs3-kpis{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin:0 0 44px; }
+  .cs3 .cs3-kpi{
+    background:#fff; border:1px solid var(--cs3-line); border-top:4px solid var(--orange);
+    border-radius:18px; padding:22px 20px;
+  }
+  .cs3 .cs3-kpi b{ display:block; font-family:var(--font-title); font-weight:500; font-size:2.3rem; line-height:1.1; color:var(--teal); }
+  .cs3 .cs3-kpi span{ display:block; margin-top:8px; font-family:var(--font-body); font-size:0.88rem; line-height:1.5; opacity:0.8; }
+
+  /* antes x depois */
+  .cs3 .cs3-compare{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:44px; }
+  .cs3 .cs3-box{ border-radius:18px; padding:26px 28px; }
+  .cs3 .cs3-before{ background:#fff; border:1px solid var(--cs3-line); }
+  .cs3 .cs3-after{ background:var(--teal); color:#fff; }
+  .cs3 .cs3-box h4{
+    font-family:var(--font-subtitle); font-size:0.75rem; font-weight:700; letter-spacing:0.08em;
+    text-transform:uppercase; margin-bottom:14px;
+  }
+  .cs3 .cs3-before h4{ color:var(--navy); opacity:0.6; }
+  .cs3 .cs3-after h4{ color:var(--cream); }
+  .cs3 .cs3-box ul{ list-style:none; }
+  .cs3 .cs3-box li{
+    font-family:var(--font-body); font-size:0.95rem; line-height:1.6;
+    padding:9px 0 9px 26px; position:relative; border-bottom:1px solid rgba(30,41,59,0.07);
+  }
+  .cs3 .cs3-after li{ border-bottom-color:rgba(255,255,255,0.15); }
+  .cs3 .cs3-box li:last-child{ border-bottom:0; }
+  .cs3 .cs3-before li::before{ content:"✕"; position:absolute; left:0; color:#c2410c; font-weight:700; }
+  .cs3 .cs3-after  li::before{ content:"✓"; position:absolute; left:0; color:var(--orange); font-weight:700; }
+
+  /* fluxo de arquitetura */
+  .cs3 .cs3-flow{ display:grid; grid-template-columns:repeat(5,1fr); gap:18px; margin:8px 0 18px; }
+  .cs3 .cs3-node{
+    position:relative; background:var(--cream); border-radius:18px; padding:34px 16px 18px; text-align:center;
+  }
+  .cs3 .cs3-node .n{
+    position:absolute; top:-20px; left:50%; transform:translateX(-50%);
+    width:40px; height:40px; border-radius:50%; background:var(--orange); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-subtitle); font-weight:700; font-size:0.85rem;
+  }
+  .cs3 .cs3-node small{ display:block; font-family:var(--font-subtitle); font-size:0.66rem; font-weight:700; letter-spacing:0.08em; color:var(--teal); }
+  .cs3 .cs3-node h4{ font-family:var(--font-title); font-weight:500; font-size:1.15rem; margin:4px 0 8px; color:var(--navy); }
+  .cs3 .cs3-node p{ font-family:var(--font-body); font-size:0.82rem; line-height:1.5; opacity:0.8; }
+  .cs3 .cs3-node:not(:last-child)::after{
+    content:"→"; position:absolute; right:-15px; top:50%; transform:translateY(-50%);
+    color:var(--orange); font-size:1.2rem; font-weight:700;
+  }
+  .cs3 .cs3-orch{
+    display:flex; gap:16px; align-items:center; flex-wrap:wrap;
+    border:2px dashed var(--orange); border-radius:18px; padding:16px 22px; margin-bottom:12px; background:#fff;
+  }
+  .cs3 .cs3-orch code{ font-family:'JetBrains Mono', monospace; font-size:0.9rem; color:var(--teal); font-weight:500; }
+  .cs3 .cs3-orch p{ font-family:var(--font-body); font-size:0.92rem; line-height:1.6; flex:1; min-width:240px; }
+  .cs3 .cs3-rule{
+    font-family:var(--font-subtitle); font-size:0.82rem; font-weight:600; color:var(--teal);
+    background:var(--cs3-soft); border-radius:12px; padding:12px 18px; margin-bottom:44px;
+  }
+
+  /* etapas do pipeline */
+  .cs3 .cs3-steps{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:44px; }
+  .cs3 .cs3-step{ background:#fff; border:1px solid var(--cs3-line); border-radius:14px; padding:14px 16px; }
+  .cs3 .cs3-step code{ display:block; font-family:'JetBrains Mono', monospace; font-size:0.74rem; color:var(--orange); margin-bottom:4px; }
+  .cs3 .cs3-step b{ display:block; font-family:var(--font-subtitle); font-size:0.88rem; margin-bottom:4px; }
+  .cs3 .cs3-step span{ font-family:var(--font-body); font-size:0.8rem; line-height:1.45; opacity:0.75; }
+
+  /* investigação: linha do tempo */
+  .cs3 .cs3-timeline{ position:relative; margin:10px 0 44px; padding-left:34px; }
+  .cs3 .cs3-timeline::before{ content:""; position:absolute; left:11px; top:6px; bottom:6px; width:2px; background:rgba(15,118,110,0.25); }
+  .cs3 .cs3-ev{ position:relative; margin-bottom:22px; }
+  .cs3 .cs3-ev::before{
+    content:""; position:absolute; left:-30px; top:6px; width:16px; height:16px; border-radius:50%;
+    background:var(--orange); box-shadow:0 0 0 5px rgba(245,158,11,0.18);
+  }
+  .cs3 .cs3-ev h4{ font-family:var(--font-subtitle); font-size:1rem; font-weight:700; margin-bottom:6px; color:var(--navy); }
+  .cs3 .cs3-ev p{ font-family:var(--font-body); font-size:0.95rem; line-height:1.7; opacity:0.85; max-width:820px; }
+  .cs3 .cs3-ev code{ font-family:'JetBrains Mono', monospace; font-size:0.8rem; background:var(--cs3-soft); padding:1px 6px; border-radius:6px; }
+
+  /* card do teste de hipótese */
+  .cs3 .cs3-test{
+    margin-top:14px; display:grid; grid-template-columns:1fr 1fr auto; gap:14px; align-items:stretch; max-width:820px;
+  }
+  .cs3 .cs3-test div{ background:#fff; border:1px solid var(--cs3-line); border-radius:14px; padding:14px 16px; }
+  .cs3 .cs3-test b{ display:block; font-family:var(--font-title); font-weight:500; font-size:1.9rem; color:var(--teal); line-height:1.1; }
+  .cs3 .cs3-test span{ font-family:var(--font-body); font-size:0.8rem; opacity:0.8; line-height:1.4; display:block; margin-top:4px; }
+  .cs3 .cs3-test .ok{ background:var(--teal); color:#fff; border:0; display:flex; flex-direction:column; justify-content:center; text-align:center; min-width:150px; }
+  .cs3 .cs3-test .ok b{ color:var(--cream); }
+  .cs3 .cs3-test .ok span{ opacity:0.9; }
+
+  /* decisões */
+  .cs3 .cs3-decisions{ display:grid; grid-template-columns:repeat(3,1fr); gap:34px 20px; margin:40px 0 24px; }
+  .cs3 .cs3-dec{ position:relative; background:var(--cream); border-radius:18px; padding:38px 22px 22px; }
+  .cs3 .cs3-dec .ic{
+    position:absolute; top:-22px; left:22px; width:46px; height:46px; border-radius:50%;
+    background:var(--teal); color:#fff; display:flex; align-items:center; justify-content:center; font-size:1.2rem;
+  }
+  .cs3 .cs3-dec h4{ font-family:var(--font-subtitle); font-size:0.98rem; font-weight:700; margin-bottom:8px; }
+  .cs3 .cs3-dec p{ font-family:var(--font-body); font-size:0.88rem; line-height:1.6; opacity:0.85; }
+
+  .cs3 pre{
+    background:var(--navy); color:#e2e8f0; border-radius:18px; padding:20px 22px; overflow-x:auto;
+    font-family:'JetBrains Mono', monospace; font-size:0.8rem; line-height:1.7; margin-bottom:44px;
+  }
+  .cs3 pre .c{ color:#94a3b8; } .cs3 pre .k{ color:var(--orange); } .cs3 pre .s{ color:var(--cream); }
+
+  /* análise em 3 passos */
+  .cs3 .cs3-story{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; margin:8px 0 44px; }
+  .cs3 .cs3-story > div{ position:relative; border-radius:18px; padding:24px; font-family:var(--font-body); font-size:0.92rem; line-height:1.65; }
+  .cs3 .cs3-story small{ display:block; font-family:var(--font-subtitle); font-size:0.68rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:8px; }
+  .cs3 .cs3-story .s1{ background:#fff; border:1px solid var(--cs3-line); }
+  .cs3 .cs3-story .s1 small{ color:#c2410c; }
+  .cs3 .cs3-story .s2{ background:var(--cream); }
+  .cs3 .cs3-story .s2 small{ color:var(--teal); }
+  .cs3 .cs3-story .s3{ background:var(--orange); color:#fff; }
+  .cs3 .cs3-story > div:not(:last-child)::after{
+    content:"→"; position:absolute; right:-17px; top:50%; transform:translateY(-50%); color:var(--orange); font-weight:700; font-size:1.2rem;
+  }
+  .cs3 .cs3-story .big{ display:block; font-family:var(--font-title); font-size:1.25rem; font-weight:500; margin-bottom:6px; }
+
+  /* próximos passos */
+  .cs3 .cs3-next{ display:flex; flex-wrap:wrap; gap:10px; margin:6px 0 20px; }
+  .cs3 .cs3-next span{
+    font-family:var(--font-body); font-size:0.88rem; background:#fff; border:1px solid var(--cs3-line);
+    border-left:4px solid var(--teal); border-radius:12px; padding:10px 14px;
+  }
+  .cs3 .cs3-foot{ font-family:var(--font-body); font-size:0.82rem; opacity:0.65; }
+
+  @media (max-width: 900px){
+    .cs3 .cs3-kpis{ grid-template-columns:1fr 1fr; }
+    .cs3 .cs3-compare, .cs3 .cs3-story{ grid-template-columns:1fr; }
+    .cs3 .cs3-flow{ grid-template-columns:1fr; gap:34px; }
+    .cs3 .cs3-node:not(:last-child)::after{ content:"↓"; right:auto; left:50%; top:auto; bottom:-30px; transform:translateX(-50%); }
+    .cs3 .cs3-steps{ grid-template-columns:1fr 1fr; }
+    .cs3 .cs3-decisions{ grid-template-columns:1fr; }
+    .cs3 .cs3-test{ grid-template-columns:1fr; }
+    .cs3 .cs3-story > div:not(:last-child)::after{ content:"↓"; right:auto; left:50%; top:auto; bottom:-22px; transform:translateX(-50%); }
+  }
+  @media (max-width: 480px){
+    .cs3 .cs3-kpis, .cs3 .cs3-steps{ grid-template-columns:1fr; }
+    .cs3 .cs3-kpi b{ font-size:2rem; }
+  }
+</style>
+
+<div class="cs-divider"></div>
+
+<div class="cs3">
+
+  <div class="section-label">CASE STUDY 03</div>
+  <h2>One Source of Truth: CRM + Pricing Spreadsheets</h2>
+  <p class="body-text cs3-lead">A Python + SQL pipeline that unifies the daily CRM history and ~80 pricing spreadsheets into a single database — so Power BI only presents data instead of processing it.</p>
+
+  <div class="cs3-tags">
+    <span>PYTHON</span><span>PANDAS</span><span>SQLITE</span><span>SQL · CTE · WINDOW FUNCTIONS</span>
+    <span>POWER AUTOMATE</span><span>PARQUET</span><span>POWER BI</span><span>DAX</span><span>DATA GOVERNANCE</span>
+  </div>
+
+  <!-- Números de destaque -->
+  <div class="cs3-kpis">
+    <div class="cs3-kpi"><b>140/142</b><span>deals linked automatically to their pricing sheet</span></div>
+    <div class="cs3-kpi"><b>~5.7k</b><span>silently swapped dates detected and fixed</span></div>
+    <div class="cs3-kpi"><b>74/75</b><span>proposals with cost and price reconciled</span></div>
+    <div class="cs3-kpi"><b>~10 s</b><span>daily refresh, without opening a single file</span></div>
+  </div>
+
+  <!-- Problema -->
+  <div class="cs-block cs-problem" style="margin-bottom:24px;">
+    <strong>The problem:</strong> the CRM knew which deals were won or lost; the pricing spreadsheets knew each proposal's cost and margin. The key commercial question — <strong>"at what margin do we win?"</strong> — needed both, and nothing linked them: the CRM has its own system ID, the spreadsheets don't. Meanwhile the Power BI report was doing all the heavy lifting itself.
+  </div>
+
+  <div class="cs3-compare">
+    <div class="cs3-box cs3-before">
+      <h4>Before</h4>
+      <ul>
+        <li>Power Query reopening Excel files on every refresh</li>
+        <li>Heavy DAX columns built on EARLIER and CONCATENATEX</li>
+        <li>The same business rule repeated in several places</li>
+        <li>No key linking a CRM deal to its cost spreadsheet</li>
+      </ul>
+    </div>
+    <div class="cs3-box cs3-after">
+      <h4>After</h4>
+      <ul>
+        <li>One SQL base with both sources, refreshed by one command</li>
+        <li>All row-level logic in Python/SQL; one-line DAX measures</li>
+        <li>Each rule lives in exactly one place — a CSV or a SQL view</li>
+        <li>Deals and proposals linked by a shared business key</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Arquitetura -->
+  <div class="cs-subhead">Architecture — Bronze → Silver → Gold</div>
+  <div class="cs3-flow" style="margin-top:34px;">
+    <div class="cs3-node"><span class="n">1</span><small>SOURCES</small><h4>Excel</h4><p>Daily CRM snapshot via Power Automate + ~80 .xlsm pricing sheets</p></div>
+    <div class="cs3-node"><span class="n">2</span><small>INGEST</small><h4>Python</h4><p>Columns by name, dates, time zone, duplicates, reconciliation</p></div>
+    <div class="cs3-node"><span class="n">3</span><small>SILVER</small><h4>SQLite</h4><p>Official base, SQL views, quality and run-log tables</p></div>
+    <div class="cs3-node"><span class="n">4</span><small>GOLD</small><h4>Parquet</h4><p>10 typed, columnar tables shaped as a star schema</p></div>
+    <div class="cs3-node"><span class="n">5</span><small>CONSUMPTION</small><h4>Power BI</h4><p>Reference hub, drill-through, one-line measures</p></div>
+  </div>
+  <div class="cs3-orch">
+    <code>atualizar.py</code>
+    <p>One orchestrator runs the 8 steps in order, stops at the first error and logs every run — <strong>full mode</strong> when new spreadsheets arrive (~7 min), <strong>CRM-only mode</strong> (~10 s) for the scheduled daily run.</p>
+  </div>
+  <div class="cs3-rule">Rule of thumb → Python for file mess · SQL for business rules · DAX only for what reacts to filters</div>
+
+  <!-- Etapas -->
+  <div class="cs-subhead">Pipeline steps</div>
+  <div class="cs3-steps">
+    <div class="cs3-step"><code>01 transformar</code><b>Cost tab</b><span>Every item of every pricing sheet, current revision only</span></div>
+    <div class="cs3-step"><code>02 factors</code><b>Pricing summary</b><span>Price, cost and FX fields read as a form</span></div>
+    <div class="cs3-step"><code>03 carregar</code><b>Load + views</b><span>Tables and SQL views into the official base</span></div>
+    <div class="cs3-step"><code>04 catalogo</code><b>Sales catalogue</b><span>Generated <em>without</em> cost or margin columns</span></div>
+    <div class="cs3-step"><code>05 prova_real</code><b>Reconciliation</b><span>Item totals vs. each sheet's own summary</span></div>
+    <div class="cs3-step"><code>06 ingest_crm</code><b>CRM</b><span>Cleans snapshots, extracts the business key</span></div>
+    <div class="cs3-step"><code>07 referencia</code><b>Bridge</b><span>Reference hub linking deals and proposals</span></div>
+    <div class="cs3-step"><code>08 gold</code><b>Gold export</b><span>Star schema to Parquet, swapped atomically</span></div>
+  </div>
+
+  <!-- Investigação -->
+  <div class="cs-subhead">Data-quality investigation</div>
+  <p class="body-text" style="margin-bottom:20px;">The first script wrote nothing: it only inventoried every sheet — columns, types, date ranges and where the key appeared. Everything below came out of that inventory.</p>
+
+  <div class="cs3-timeline">
+    <div class="cs3-ev">
+      <h4>Silently swapped day and month</h4>
+      <p>A few dates showed up "in the future". Hypothesis: the flow wrote <code>dd/mm/yyyy</code> as text and US-locale Excel converted it to a date only when the day was ≤ 12 — swapping day and month. When the day was &gt; 12, the text survived. That is testable:</p>
+      <div class="cs3-test">
+        <div><b>100%</b><span>of values stored as dates had a day ≤ 12</span></div>
+        <div><b>0%</b><span>of values stored as text had a day ≤ 12</span></div>
+        <div class="ok"><b>~5.7k</b><span>values fixed — not just the few that looked wrong</span></div>
+      </div>
+    </div>
+    <div class="cs3-ev">
+      <h4>Time zone and duplicate snapshots</h4>
+      <p>Snapshots are written overnight in UTC, which falls on the previous day in local time. Converting to local time and keeping one snapshot per deal per day removed ~1,900 duplicate rows.</p>
+    </div>
+    <div class="cs3-ev">
+      <h4>Key false positives</h4>
+      <p>A probability band (<code>25 - 50%</code>) matched the reference pattern. Extraction was restricted to the deal name, where the key appears in 140 of 142 deals.</p>
+    </div>
+    <div class="cs3-ev">
+      <h4>Cost × price reconciliation</h4>
+      <p>An earlier version counted group subtotals as items and doubled the markup. With explicit group-row rules, reconciliation matches 74 of 75 proposals; the exception is a known scenario issue inside that spreadsheet.</p>
+    </div>
+  </div>
+
+  <!-- Decisões -->
+  <div class="cs-subhead">Technical decisions &amp; trade-offs</div>
+  <div class="cs3-decisions">
+    <div class="cs3-dec"><span class="ic">🔑</span><h4>Business key over system ID</h4><p>The internal proposal reference (YY-NNN) is the only thing both sources share — normalized with the same regex on both sides.</p></div>
+    <div class="cs3-dec"><span class="ic">🧭</span><h4>A hub against many-to-many</h4><p>One reference can have several deals (handover copies, auction lots) and revisions. A reference dimension in the middle lets every fact link 1:N.</p></div>
+    <div class="cs3-dec"><span class="ic" style="font-family:var(--font-subtitle);font-weight:700;">%</span><h4>Percentages don't add up</h4><p>The base ships numerator and denominator — never a pre-divided margin — so DIVIDE(SUM, SUM) stays right under any filter.</p></div>
+    <div class="cs3-dec"><span class="ic">📋</span><h4>Exceptions become a list</h4><p>The pipeline never hides a problem nor stops on an expected case: a six-level worklist separates real gaps from normal states.</p></div>
+    <div class="cs3-dec"><span class="ic">🔒</span><h4>Confidentiality by model</h4><p>Cost and margin stay in a restricted model; sales gets a catalogue generated without them. Hiding a column doesn't protect data.</p></div>
+    <div class="cs3-dec"><span class="ic">🗂️</span><h4>SQLite + Parquet</h4><p>No server or IT approval (the ODBC driver was blocked); typed columns reach Power BI as-is and port to BigQuery, Athena or Fabric.</p></div>
+  </div>
+
+<pre><span class="c"># Same rule on both sides: "26-70", "26 - 070", "NBH-26-070" → "26-070"</span>
+PADRAO_REF = re.<span class="k">compile</span>(<span class="s">r"(?&lt;![\d:])(2\d)\s*[-–]\s*(\d{1,3})(?![\d:])"</span>)
+
+<span class="k">def</span> normalizar(texto):
+    m = PADRAO_REF.search(<span class="k">str</span>(texto))
+    <span class="k">return</span> <span class="s">f"{m.group(1)}-{int(m.group(2)):03d}"</span> <span class="k">if</span> m <span class="k">else</span> <span class="k">None</span></pre>
+
+  <!-- Análise -->
+  <div class="cs-subhead">First cross-source analysis — a pattern that didn't survive controls</div>
+  <div class="cs3-story">
+    <div class="s1"><small>The first number</small><span class="big">"We win by cutting margin"</span>Once linked, the weighted margin of won proposals came out far below that of lost ones.</div>
+    <div class="s2"><small>The control</small><span class="big">Split by size, drop pass-throughs</span>Within the band with the most cases, the gap nearly vanished. It was a composition effect, not pricing.</div>
+    <div class="s3"><small>The honest conclusion</small><span class="big">A hypothesis, not a finding</span>One band, too few cases — to be tested (Mann-Whitney) as the sample grows, instead of forwarding the raw number.</div>
+  </div>
+
+  <!-- Resultado operacional -->
+  <div class="cs-block cs-solution">
+    <strong>Beyond the dashboard:</strong> the pipeline produces a prioritized worklist of deals without a pricing sheet — negotiating, closed, in progress, pre-pricing, missing reference, no action. It showed, for instance, that <strong>each company bidding on the same lot receives its own spreadsheet</strong>, which avoided building an unnecessary mapping table.
+  </div>
+
+  <!-- Próximos passos -->
+  <div class="cs-subhead">Future improvements</div>
+  <div class="cs3-next">
+    <span>Power BI report with a drill-through page per reference</span>
+    <span>Scheduled daily run + cloud move (Fabric / SharePoint)</span>
+    <span>ISO dates written at the source</span>
+    <span>Statistical test of the margin hypothesis</span>
+    <span>Public GitHub version on synthetic data</span>
+  </div>
+  <p class="cs3-foot">Built on real work data. No client names, deal values or margins are shown here.</p>
+
+</div>
+      <!-- =================== FIM CASE STUDY 03 =================== -->
+
+
     </section>
 
     <section id="experience">
